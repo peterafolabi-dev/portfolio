@@ -38,6 +38,7 @@ const tools = [
   ['Backend & data', ['Django', 'Supabase', 'PostgreSQL']],
 ] as const;
 import LiveTime from '../components/LiveTime';
+import BuildClock from '../components/BuildClock';
 ---
 <Base home>
 <div id="top"></div>
@@ -62,6 +63,7 @@ import LiveTime from '../components/LiveTime';
           <div class="flex justify-between gap-4 border-t border-white/[.14] py-2"><dt class="text-cream/75">{k}</dt><dd class="text-right text-cream">{on && <span class="mr-1.5 inline-block size-1.5 rounded-full bg-accent"></span>}{v}</dd></div>
         ))}
         <div class="flex justify-between gap-4 border-t border-white/[.14] py-2"><dt class="text-cream/75">Local time</dt><dd class="text-right text-cream"><span class="mr-1.5 inline-block size-1.5 animate-pulse rounded-full bg-teal"></span><LiveTime client:load /></dd></div>
+        <div class="flex justify-between gap-4 border-t border-white/[.14] py-2"><dt class="text-cream/75">Since Dec 2025</dt><dd class="text-right text-cream"><BuildClock client:load /></dd></div>
       </dl>
     </div>
   </div>
