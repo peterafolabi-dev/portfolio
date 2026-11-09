@@ -108,7 +108,7 @@ export const cases: Record<string, Case> = {
       { t: 'Everything is scoped to the signed-in user', d: 'Every query filters by the current user, and the tests check one student cannot read another’s records.' },
     ],
     results: [
-      'A large Django test suite. The README says 168 tests and my CV says 128; I have not reconciled them, so treat both as approximate',
+      '168 Django tests run in CI on every push (the count in the repo README)',
       'Free-tier hosting: the first request after idle takes about 30 seconds while the server wakes up',
     ],
     next: ['Reconcile the test count between README and CV', 'Reminders by email', 'Better handling of the cold start'],
