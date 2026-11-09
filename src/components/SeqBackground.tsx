@@ -1,7 +1,10 @@
 import { useEffect, useRef } from 'react';
 
 const COUNT = 230;
-const small = typeof matchMedia !== 'undefined' && matchMedia('(max-width: 767px)').matches;
+const conn = (typeof navigator !== 'undefined' ? (navigator as any).connection : undefined) as { saveData?: boolean; effectiveType?: string } | undefined;
+/** Data Saver on, or a 2G/3G connection: load a light version (small frames, every 4th frame, about a quarter of the weight). */
+const lean = !!conn && (conn.saveData === true || ['slow-2g', '2g', '3g'].includes(conn.effectiveType ?? ''));
+const small = lean || (typeof matchMedia !== 'undefined' && matchMedia('(max-width: 767px)').matches);
 const src = (i: number) => `/img/${small ? 'seq-s' : 'seq'}/${String(i + 1).padStart(3, '0')}.jpg`;
 
 /** Full-screen scroll-scrubbed image sequence (230 frames) behind the whole page. */
@@ -52,8 +55,11 @@ export default function SeqBackground() {
     const update = () => { if (ready) draw(reduce ? 0 : Math.round(progress() * (COUNT - 1))); };
 
     for (let i = 0; i < COUNT; i++) { const im = new Image(); im.decoding = 'async'; frames.push(im); }
-    // load first frame now, then every 8th frame (coarse turn first), then the rest, a few at a time
-    const order = [0, ...Array.from({ length: COUNT }, (_, i) => i).filter((i) => i % 8 === 0 && i), ...Array.from({ length: COUNT }, (_, i) => i).filter((i) => i % 8 !== 0)];
+    // load first frame now, then every 8th frame (coarse turn first), then the rest, a few at a time (lean mode stops after every 4th)
+    const all = Array.from({ length: COUNT }, (_, i) => i);
+    const order = lean
+      ? [0, ...all.filter((i) => i % 4 === 0 && i)]
+      : [0, ...all.filter((i) => i % 8 === 0 && i), ...all.filter((i) => i % 8 !== 0)];
     let next = 0, dead = false;
     const pump = () => {
       if (dead || next >= order.length) return;
