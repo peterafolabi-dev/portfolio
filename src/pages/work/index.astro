@@ -1,0 +1,22 @@
+---
+import Base from '../../layouts/Base.astro';
+import { projects } from '../../data/projects';
+---
+<Base title="Projects — Afolabi Peter" description="Six real projects by Afolabi Peter: fintech, marketplace, e-commerce, edtech and logistics, each with a live demo and code.">
+<section class="wk">
+<p class="mo" style="color:var(--mut)">Selected work · {projects.length} projects</p>
+<h1>Projects</h1>
+<ul class="wl">
+{projects.map((p, i) => (
+<li><a href={`/work/${p.slug}/`}>
+<span class="mo n">0{i + 1}</span>
+<span class="t"><b>{p.title}</b><em>{p.kind}</em></span>
+<span class="s mo">{p.stack.slice(0, 3).join(' · ')}</span>
+<span class="y mo">{p.year}</span>
+<img src={p.img} alt={`${p.title} screenshot`} loading="lazy" />
+</a></li>
+))}
+</ul>
+<a class="mo back" href="/">← Back home</a>
+</section>
+</Base>
