@@ -2,6 +2,8 @@
 import Base from '../layouts/Base.astro';
 import ProjectCarousel from '../components/ProjectCarousel';
 import Dots from '../components/Dots';
+import TamperDemo from '../components/TamperDemo';
+import { cases } from '../data/cases';
 import WorkIndex from '../components/WorkIndex.astro';
 import { projects } from '../data/projects';
 
@@ -26,8 +28,8 @@ const jobs = [
 ];
 const stats = [
   ['6', 'Live projects, all with code on GitHub'],
-  ['800', 'Random trading histories tested on every push (Oja Ledger)'],
-  ['260+', 'Automated tests across my projects, run in CI'],
+  ['4 × 200', 'Ledger invariants, each checked on 200 generated ledgers on every push (Oja Ledger)'],
+  ['11', 'Unit tests on the Paystack payment decision, down to one kobo (Travel & Stays)'],
 ];
 const tools = [
   ['Languages', ['TypeScript', 'JavaScript', 'Python']],
@@ -46,7 +48,7 @@ const tools = [
     <h1 class="text-[clamp(3.4rem,15vw,11.5rem)] font-extralight uppercase leading-[.88] tracking-[-0.05em]">Afolabi<br /><span class="bg-gradient-to-r from-cream via-cream to-teal bg-clip-text text-transparent">Peter</span></h1>
     <div class="mt-8 grid gap-8 sm:mt-10 md:grid-cols-[1fr_auto] md:items-end">
       <div>
-        <p class="max-w-md text-base text-cream/75 sm:text-lg">I build software people trust with money and data. Based in Nigeria, open to remote roles and internships.</p>
+        <p class="max-w-md text-base text-cream/75 sm:text-lg">I build money-handling software: an offline ledger that catches a changed naira, bookings the database refuses to double, payments the server confirms. Based in Nigeria, open to remote roles and internships.</p>
         <div class="mt-8 flex flex-wrap gap-3">
           <a href="#work" class="btn btn-primary">View my work ↓</a>
           <a href="/Afolabi-Peter-CV.pdf" download class="btn btn-ghost">Download CV</a>
@@ -64,14 +66,37 @@ const tools = [
 
 <section class="py-24 sm:py-36" aria-label="Summary">
   <div class="wrap">
-    <p data-r class="max-w-4xl text-3xl font-light leading-[1.15] tracking-tight sm:text-5xl lg:text-6xl">Payments verified on the server. Bookings the database refuses to double. <span class="text-accent">Software</span> you can trust.</p>
+    <p data-r class="max-w-4xl text-3xl font-light leading-[1.15] tracking-tight sm:text-5xl lg:text-6xl">My first property test caught a bug in <span class="text-accent">my own test</span>. That is why I write them first.</p>
+  </div>
+</section>
+
+<section id="flagship" class="py-16 sm:py-24" aria-label="Flagship project">
+  <div class="wrap">
+    <div data-r class="mb-10 grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-end">
+      <div><p class="eyebrow mb-4"><span class="text-accent">01</span> — Flagship</p><h2 class="h2">Oja Ledger</h2></div>
+      <p class="text-lg text-cream/75">Offline bookkeeping for Nigerian traders, where changing a single naira in the past is detectable. Built alone: accounting engine, tests, UI and deployment.</p>
+    </div>
+    <div data-r class="mb-6 grid gap-4 sm:grid-cols-3">
+      {[['4 × 200', 'invariants × generated ledgers, per push'], ['0 floats', 'money is whole kobo behind a branded type'], ['Offline', 'works with no network; each save is one atomic transaction']].map(([n, l]) => (
+        <div class="card p-5"><p class="bg-gradient-to-r from-accent to-amber bg-clip-text text-3xl font-extralight tracking-tight text-transparent sm:text-4xl">{n}</p><p class="mt-2 text-xs text-cream/60">{l}</p></div>
+      ))}
+    </div>
+    <div data-r>
+      <p class="mb-3 font-mono text-xs uppercase tracking-[.18em] text-teal">Try to break it</p>
+      <TamperDemo client:visible />
+    </div>
+    <div data-r class="mt-8 flex flex-wrap items-center gap-3">
+      <a href="/work/oja-ledger/" class="btn btn-primary">Read the case study →</a>
+      <a href="https://oja-ledger.vercel.app" target="_blank" rel="noopener" class="btn btn-ghost">Live demo ↗</a>
+      <a href="https://github.com/peterafolabi-dev/oja-ledger" target="_blank" rel="noopener" class="btn btn-ghost">Code ↗</a>
+    </div>
   </div>
 </section>
 
 <section id="work" class="py-16 sm:py-24">
   <div class="wrap">
     <div data-r class="mb-10 flex items-end justify-between gap-6">
-      <div><p class="eyebrow mb-4"><span class="text-accent">01</span> — Selected work</p><h2 class="h2">Projects</h2></div>
+      <div><p class="eyebrow mb-4"><span class="text-accent">02</span> — Also built</p><h2 class="h2">More projects</h2></div>
       <a href="/work/" class="btn btn-ghost hidden sm:inline-flex">All projects →</a>
     </div>
   </div>
@@ -85,7 +110,7 @@ const tools = [
 <section id="capabilities" class="py-16 sm:py-24" aria-label="Capabilities">
   <div class="wrap">
     <div data-r class="mb-10 grid gap-4 md:grid-cols-2 md:items-end">
-      <div><p class="eyebrow mb-4"><span class="text-accent">02</span> — Capabilities</p><h2 class="h2">How I can help</h2></div>
+      <div><p class="eyebrow mb-4"><span class="text-accent">03</span> — Capabilities</p><h2 class="h2">How I can help</h2></div>
       <p class="text-cream/65">From first schema to deployed, tested product, these are the things I’ve actually shipped.</p>
     </div>
     <ul class="grid gap-px overflow-hidden rounded-3xl border border-cream/10 bg-cream/10 sm:grid-cols-2 lg:grid-cols-3">
@@ -115,7 +140,7 @@ const tools = [
 
 <section id="experience" class="py-16 sm:py-24" aria-label="Experience">
   <div class="wrap">
-    <div data-r class="mb-10"><p class="eyebrow mb-4"><span class="text-accent">03</span> — Experience</p><h2 class="h2">Where I’ve worked</h2></div>
+    <div data-r class="mb-10"><p class="eyebrow mb-4"><span class="text-accent">04</span> — Experience</p><h2 class="h2">Where I’ve worked</h2></div>
     <ol class="space-y-5">
       {jobs.map((j) => (
         <li data-r class="card grid gap-5 p-6 sm:p-8 md:grid-cols-[minmax(0,.8fr)_minmax(0,1.6fr)] md:gap-12">
@@ -144,7 +169,7 @@ const tools = [
       </div>
     </div>
     <div data-r>
-      <p class="eyebrow mb-4"><span class="text-accent">04</span> — About</p>
+      <p class="eyebrow mb-4"><span class="text-accent">05</span> — About</p>
       <h2 class="h2 mb-8">About me</h2>
       <p class="text-base text-cream/80 sm:text-lg">I’m a Computer Engineering student at the Federal University of Technology, Minna, and a Junior Full-Stack Engineer who learns by shipping. I like the unglamorous layer: database constraints, payment verification, offline behaviour and tests that fail loudly.</p>
       <p class="mt-6 text-2xl font-extralight leading-tight tracking-tight sm:text-4xl">Correctness is a feature you <span class="text-accent">can’t bolt on later.</span></p>
@@ -161,7 +186,7 @@ const tools = [
 <section id="toolkit" class="py-16 sm:py-24" aria-label="Toolkit">
   <div class="wrap">
     <div data-r>
-      <p class="eyebrow mb-5"><span class="text-accent">05</span> — Toolkit</p>
+      <p class="eyebrow mb-5"><span class="text-accent">06</span> — Toolkit</p>
       <div class="grid gap-4 md:grid-cols-3">
         {tools.map(([name, list]) => (
           <div class="card p-6">
@@ -179,7 +204,12 @@ const tools = [
     <div data-r class="rounded-[2rem] bg-accent p-8 text-ink sm:p-14">
       <p class="font-mono text-xs uppercase tracking-[0.18em] text-ink/70">Contact</p>
       <h2 class="mt-4 text-[clamp(3rem,11vw,8rem)] font-extralight uppercase leading-[.9] tracking-tighter">Let’s talk!</h2>
-      <a href="mailto:afolabiprosper329@gmail.com" class="mt-8 block break-all text-xl font-light tracking-tight underline-offset-8 hover:underline sm:text-4xl">afolabiprosper329@gmail.com</a>
+      <a href="mailto:afolabiprosper329@gmail.com?subject=Role%20or%20interview%3A%20Afolabi%20Peter" class="mt-8 block break-all text-xl font-light tracking-tight underline-offset-8 hover:underline sm:text-4xl">afolabiprosper329@gmail.com</a>
+      <dl class="mt-10 grid gap-x-8 gap-y-4 border-t border-ink/25 pt-8 text-sm sm:grid-cols-2 lg:grid-cols-4">
+        {[['Looking for', 'Remote roles and internships'], ['Timezone', 'WAT (UTC+1): overlaps the UK and EU workday and US mornings'], ['Stack', 'TypeScript, React, Django, PostgreSQL'], ['Best way to reach me', 'Email, or LinkedIn']].map(([k, v]) => (
+          <div><dt class="font-mono text-[11px] uppercase tracking-widest text-ink/60">{k}</dt><dd class="mt-1.5 text-ink">{v}</dd></div>
+        ))}
+      </dl>
       <div class="mt-10 flex flex-wrap gap-3">
         <a href="/Afolabi-Peter-CV.pdf" download class="btn border border-ink hover:bg-ink hover:text-cream">Download CV ↓</a>
         <a href="https://www.linkedin.com/in/afolabi-peter-953669391" target="_blank" rel="noopener" class="btn border border-ink hover:bg-ink hover:text-cream">LinkedIn ↗</a>

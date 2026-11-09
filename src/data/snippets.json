@@ -1,0 +1,46 @@
+{
+ "oja-ledger": [
+  {
+   "title": "A changed naira breaks the chain",
+   "file": "src/core/ledger.ts",
+   "lang": "ts",
+   "why": "Runs when the app opens: it recomputes every hash, so changing one old amount makes every later link fail.",
+   "code": "export async function verifyChain(journal: readonly Entry[]): Promise<ChainCheck> {\n  let prev = GENESIS_HASH\n  for (let i = 0; i < journal.length; i++) {\n    const e = journal[i]!\n    if (e.seq !== i + 1) return { ok: false, checked: i, brokenAt: e.seq, reason: 'Entry numbers are out of order' }\n    if (e.prevHash !== prev) return { ok: false, checked: i, brokenAt: e.seq, reason: 'Link to the previous entry is broken' }\n    try {\n      validateDraft(e)\n    } catch (err) {\n      return { ok: false, checked: i, brokenAt: e.seq, reason: (err as Error).message }\n    }\n    const { hash, ...rest } = e\n    if ((await computeHash(rest)) !== hash) {\n      return { ok: false, checked: i, brokenAt: e.seq, reason: 'Entry was changed after it was recorded' }\n    }\n    prev = hash\n  }\n  return { ok: true, checked: journal.length }\n}",
+   "url": "https://github.com/peterafolabi-dev/oja-ledger/blob/3aba7a54c90dade8998da7cb3a6a160c559d41c5/src/core/ledger.ts#L168-L186",
+   "test": "Proved by a property test that tampers with a random past entry in six ways",
+   "testUrl": "https://github.com/peterafolabi-dev/oja-ledger/blob/3aba7a54c90dade8998da7cb3a6a160c559d41c5/src/core/ledger.test.ts#L54-L85"
+  },
+  {
+   "title": "“The books always balance” as a property, not an example",
+   "file": "src/core/ledger.test.ts",
+   "lang": "ts",
+   "why": "fast-check generates 200 random ledgers per run and shrinks any failure to the smallest case. The first run caught a signed-zero bug in my own reversal test.",
+   "code": "const RUNS = { numRuns: 200 }\n\ndescribe('ledger invariants (property-based)', () => {\n  it('the trial balance always balances, whatever happens', async () => {\n    await fc.assert(\n      fc.asyncProperty(history, async (drafts) => {\n        const tb = trialBalance(await post(drafts))\n        expect(tb.balanced).toBe(true)\n      }),\n      RUNS,\n    )\n  })",
+   "url": "https://github.com/peterafolabi-dev/oja-ledger/blob/3aba7a54c90dade8998da7cb3a6a160c559d41c5/src/core/ledger.test.ts#L14-L25",
+   "test": "Runs on every push in GitHub Actions",
+   "testUrl": "https://github.com/peterafolabi-dev/oja-ledger/actions/workflows/ci.yml"
+  }
+ ],
+ "travel-stays": [
+  {
+   "title": "The database refuses the double booking",
+   "file": "supabase/migrations/003_bookings.sql",
+   "lang": "sql",
+   "why": "Two guests clicking “Book” in the same instant cannot both succeed, because Postgres rejects the overlap, not my app code. “[)” leaves the check-out day free for the next guest.",
+   "code": "  -- DOUBLE-BOOKING PROTECTION. Postgres itself refuses any new pending or\n  -- confirmed booking whose nights overlap another one on the same listing.\n  -- '[)' means the check-out day is free, so one guest can leave the same\n  -- morning the next one arrives. Because the database enforces this, two\n  -- people clicking \"Book\" at the same instant can never both succeed.\n  constraint bookings_no_overlap exclude using gist (\n    listing_id with =,\n    daterange(check_in, check_out, '[)') with &&\n  ) where (status in ('pending', 'confirmed'))\n);",
+   "url": "https://github.com/peterafolabi-dev/travel-stays/blob/952a2a08f410c0918675fa06dcdec96d90fb2cd5/supabase/migrations/003_bookings.sql#L43-L52",
+   "test": "CI builds a fresh Postgres 16 from the real migrations and has 8 sessions book the same dates at once; exactly one may win",
+   "testUrl": "https://github.com/peterafolabi-dev/travel-stays/blob/952a2a08f410c0918675fa06dcdec96d90fb2cd5/supabase/tests/run.sh#L25-L35"
+  },
+  {
+   "title": "“The popup said success” is not proof",
+   "file": "supabase/functions/verify-payment/verify.ts",
+   "lang": "ts",
+   "why": "A pure function: the payment counts only if Paystack says it succeeded, the amount matches the server’s price to the kobo, and the currency is NGN.",
+   "code": "export function judgePayment(httpOk: boolean, body: PaystackVerifyResponse | null, payment: StoredPayment): Verdict {\n  const tx = body?.data ?? undefined\n  const fail = (reason: string): Verdict => ({\n    ok: false,\n    status: tx?.status === 'abandoned' ? 'abandoned' : 'failed',\n    reason: tx?.gateway_response ?? body?.message ?? reason,\n  })\n\n  if (!httpOk) return fail('Paystack request failed')\n  if (body?.status !== true) return fail('Paystack did not confirm the transaction')\n  if (!tx || tx.status !== 'success') return fail('Transaction was not successful')\n  if (!Number.isInteger(payment.amount) || tx.amount !== payment.amount) return fail('Amount does not match the booking')\n  if (tx.currency !== 'NGN') return fail('Currency is not NGN')\n\n  return { ok: true, channel: tx.channel, gatewayResponse: tx.gateway_response }",
+   "url": "https://github.com/peterafolabi-dev/travel-stays/blob/952a2a08f410c0918675fa06dcdec96d90fb2cd5/supabase/functions/verify-payment/verify.ts#L29-L43",
+   "test": "11 unit tests, including underpaying by one kobo and the wrong currency",
+   "testUrl": "https://github.com/peterafolabi-dev/travel-stays/blob/952a2a08f410c0918675fa06dcdec96d90fb2cd5/supabase/functions/verify-payment/verify.test.ts#L1-L62"
+  }
+ ]
+}

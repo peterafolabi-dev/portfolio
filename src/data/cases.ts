@@ -6,6 +6,10 @@ export interface Case {
   results: string[];
   next: string[];
   shots?: { src: string; alt: string; mobile?: boolean }[];
+  ci?: { badge: string; url: string };
+  wrong: string[];
+  /** Optional walkthrough video: put the file in public/video/ and set src (and optional poster). Renders nothing until set. */
+  video?: { src: string; poster?: string };
 }
 
 export const cases: Record<string, Case> = {
@@ -22,11 +26,19 @@ export const cases: Record<string, Case> = {
       { t: 'Offline-first and atomic', d: 'The book lives in IndexedDB. Each save writes the entries and the new chain head in one transaction, and a service worker lets the app open with no network.' },
     ],
     results: [
-      '24 automated tests, including 7 property-based checks that each run 100 to 200 generated cases',
+      '29 automated tests in CI, including 4 ledger invariants each checked against 200 generated trading histories on every push',
       'Strict TypeScript (strict, noUncheckedIndexedAccess) with no any',
-      'Zero runtime dependencies beyond React; 59 kB of JavaScript after gzip',
+      'Zero runtime dependencies beyond React; about 68 kB of JavaScript after gzip',
     ],
     next: ['Sync across devices using the existing hash-linked log', 'Encrypted cloud backup with a PIN-derived key', 'Inventory by item so cost of goods sold is calculated', 'Review of the tax logic by a Nigerian chartered accountant'],
+    ci: { badge: 'https://github.com/peterafolabi-dev/oja-ledger/actions/workflows/ci.yml/badge.svg', url: 'https://github.com/peterafolabi-dev/oja-ledger/actions/workflows/ci.yml' },
+    wrong: [
+      'My own test had a bug. The first property-test run found a signed-zero (−0) bug in my reversal test. Hand-written example tests would never have hit it.',
+      'Tamper-evident is not tamper-proof. Someone with the device could recompute the whole chain. The fingerprint only protects the owner if it is written down somewhere else, which is exactly what the demo above shows.',
+      'I assumed two tabs could fork the chain. They cannot, because entry numbers are unique keys and the second save is rejected whole. I only proved that with a test later, and added a clear message plus cross-tab reload.',
+      'Browsers can silently clear site storage. The app now asks for persistent storage and tells the owner whether it was granted, but a CSV export is still the real backup.',
+      'No sync yet. One device is the source of truth, so losing the phone without an export loses the book.',
+    ],
     shots: [
       { src: '/img/oja-today.jpg', alt: 'Oja Ledger Today screen with sales, profit and VAT' },
       { src: '/img/oja-journal.jpg', alt: 'Oja Ledger journal with sealed entries' },
@@ -49,8 +61,17 @@ export const cases: Record<string, Case> = {
     results: [
       'Live on Vercel with demo data for stays in all 36 states and the FCT, plus tours',
       'The payment decision is a pure function covered by 11 unit tests, including underpaying by one kobo and the wrong currency',
-      'CI on every push: lint, production build and the payment tests; shipped with code reviews from the MALhub engineering team',
+      'CI on every push: lint, production build, the payment tests, and a database job that builds a fresh Postgres 16 from the real migrations and checks overlap, a same-instant race (8 sessions, exactly one winner), row-level security and hold expiry',
+      'Payments run in Paystack test mode; shipped with code reviews from the MALhub engineering team',
     ],
-    next: ['Hold host payouts until check-in with Paystack split payments', 'Database tests in CI that prove the overlap constraint and security policies', 'Paystack webhooks as a second confirmation path if a guest closes the tab early'],
+    next: ['Hold host payouts until check-in with Paystack split payments', 'Run the database tests against the Supabase CLI’s local stack (real auth and storage) instead of my small stand-ins', 'Row-level-security tests for the tours tables as well as stays'],
+    ci: { badge: 'https://github.com/peterafolabi-dev/travel-stays/actions/workflows/ci.yml/badge.svg', url: 'https://github.com/peterafolabi-dev/travel-stays/actions/workflows/ci.yml' },
+    wrong: [
+      'The headline claim had no test. “The database refuses double bookings” was only true by reading the SQL. There is now a CI job that builds Postgres from the real migrations and proves it, including a same-instant race.',
+      'Unpaid holds never expired. Each traveller was capped at 3 unpaid holds, but a hold lasted forever. Migration 019 releases unpaid stays after 72 hours and never touches paid ones or one being paid right now.',
+      'If a guest closes the tab right after paying, only the browser call confirmed the payment. I wrote a signature-checked Paystack webhook as a second path.',
+      'Two of those fixes (hold expiry and the webhook) are in the repo and tested, but not yet switched on for the live demo project. They need the migration run and the function deployed.',
+      'Host payouts are not held until check-in, and refunds are recorded for an admin to process by hand. Paystack is in test mode.',
+    ],
   },
 };

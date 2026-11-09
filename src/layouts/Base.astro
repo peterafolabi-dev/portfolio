@@ -1,17 +1,19 @@
 ---
 import '../styles/global.css';
 import Header from '../components/Header';
+import HireBar from '../components/HireBar.astro';
 import Footer from '../components/Footer.astro';
 import SeqBackground from '../components/SeqBackground';
 
 interface Props { title?: string; description?: string; home?: boolean }
 const {
   title = 'Afolabi Peter — Junior Full-Stack Engineer',
-  description = 'Afolabi Peter, Junior Full-Stack Engineer and Computer Engineering student in Nigeria. Payments, bookings and offline-first software. Open to remote roles and internships.',
+  description = 'Afolabi Peter, Junior Full-Stack Engineer and Computer Engineering student in Nigeria. Builds money-handling software: an offline ledger with a tamper-evident hash chain, bookings the database will not double, server-verified Paystack payments. Open to remote roles and internships.',
   home = false,
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
-const ld = { '@context': 'https://schema.org', '@type': 'Person', name: 'Afolabi Peter', jobTitle: 'Junior Full-Stack Engineer', url: 'https://afolabi-peter.vercel.app/', email: 'mailto:afolabiprosper329@gmail.com', alumniOf: 'Federal University of Technology, Minna', sameAs: ['https://github.com/peterafolabi-dev', 'https://www.linkedin.com/in/afolabi-peter-953669391'] };
+const ogImage = new URL('/og.png', Astro.site).href;
+const ld = { '@context': 'https://schema.org', '@type': 'Person', name: 'Afolabi Peter', jobTitle: 'Junior Full-Stack Engineer', url: Astro.site?.href, email: 'mailto:afolabiprosper329@gmail.com', alumniOf: 'Federal University of Technology, Minna', sameAs: ['https://github.com/peterafolabi-dev', 'https://www.linkedin.com/in/afolabi-peter-953669391'] };
 ---
 <!doctype html>
 <html lang="en">
@@ -22,7 +24,7 @@ const ld = { '@context': 'https://schema.org', '@type': 'Person', name: 'Afolabi
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
 <meta property="og:type" content="website" /><meta property="og:title" content={title} /><meta property="og:description" content={description} /><meta property="og:url" content={canonical} />
-<meta name="twitter:card" content="summary" /><meta name="theme-color" content="#0e1214" />
+<meta property="og:image" content={ogImage} /><meta property="og:image:width" content="1200" /><meta property="og:image:height" content="630" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:image" content={ogImage} /><meta name="theme-color" content="#0e1214" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23293237'/%3E%3Cpath d='M9 24 16 8l7 16' stroke='%23FF4A1C' stroke-width='3' fill='none'/%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@200;300;400;600&family=JetBrains+Mono:wght@400;500&display=swap" />
@@ -35,6 +37,7 @@ const ld = { '@context': 'https://schema.org', '@type': 'Person', name: 'Afolabi
 {home ? <SeqBackground client:load /> : <div aria-hidden="true" class="fixed inset-0 -z-10 bg-[radial-gradient(60%_45%_at_85%_0%,rgba(255,74,28,.16),transparent),radial-gradient(45%_35%_at_0%_60%,rgba(61,224,197,.08),transparent)]"></div>}
 <main id="main"><slot /></main>
 <Footer />
+<HireBar />
 <script is:inline>
 (function(){var els=[].slice.call(document.querySelectorAll('[data-r]'));if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return}
 var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -6% 0px'});els.forEach(function(e){io.observe(e)})})();

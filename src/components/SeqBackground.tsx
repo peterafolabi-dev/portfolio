@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react';
 
 const COUNT = 230;
-const src = (i: number) => `/img/seq/${String(i + 1).padStart(3, '0')}.jpg`;
+const small = typeof matchMedia !== 'undefined' && matchMedia('(max-width: 767px)').matches;
+const src = (i: number) => `/img/${small ? 'seq-s' : 'seq'}/${String(i + 1).padStart(3, '0')}.jpg`;
 
 /** Full-screen scroll-scrubbed image sequence (230 frames) behind the whole page. */
 export default function SeqBackground() {

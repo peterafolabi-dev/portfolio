@@ -1,4 +1,5 @@
 export interface Project {
+  note?: string;
   slug: string; title: string; kind: string; year: string; img: string; real: boolean;
   live: string; liveLabel: string; case?: string; repo: string; stack: string[]; summary: string; hard: string;
 }
@@ -21,12 +22,13 @@ export const projects: Project[] = [
       "fast-check"
     ],
     "summary": "Offline double-entry bookkeeping for Nigerian traders. Record a sale in two taps with no network, then get profit, VAT returns and the small-company tax check under the Nigeria Tax Act 2025.",
-    "hard": "Every entry is sealed with a SHA-256 hash of the one before it, so editing any past naira is detectable. Money is whole kobo, never floats, and 800 random trading histories are tested on every push.",
+    "hard": "Every entry is sealed with a SHA-256 hash of the one before it, so editing any past naira is detectable. Money is whole kobo, never floats, and four ledger invariants are checked against 200 generated trading histories each on every push.",
     "liveLabel": "Live demo",
     "case": "https://github.com/peterafolabi-dev/oja-ledger/blob/main/docs/CASE_STUDY.md"
   },
   {
     "slug": "travel-stays",
+    "note": "Payments run in Paystack test mode: no real money moves.",
     "title": "Travel & Stays",
     "kind": "Marketplace · MALhub internship",
     "year": "Aug – Oct 2026",
@@ -42,7 +44,7 @@ export const projects: Project[] = [
       "Paystack"
     ],
     "summary": "A two-sided marketplace for verified stays and local tours across Nigeria, with guests, hosts and tour guides, Paystack payments in naira, and an admin dashboard.",
-    "hard": "Two guests can't book the same dates, even in the same second: a Postgres exclude using gist constraint makes the double booking impossible. A booking is only marked paid after the server confirms the exact amount and currency with Paystack, covered by 11 unit tests.",
+    "hard": "Two guests can't book the same dates, even in the same second: a Postgres exclusion constraint makes the double booking impossible, and CI proves it with a race of 8 sessions. A booking is only marked paid after the server confirms the exact amount and currency with Paystack (test mode), covered by 11 unit tests.",
     "liveLabel": "Live site",
     "case": "https://github.com/peterafolabi-dev/travel-stays/blob/master/docs/CASE_STUDY.md"
   },
@@ -70,6 +72,7 @@ export const projects: Project[] = [
   },
   {
     "slug": "studyflow",
+    "note": "Free-tier hosting: the first load after a quiet spell can take up to a minute.",
     "title": "StudyFlow",
     "kind": "EdTech · For FUT Minna students",
     "year": "2026",
@@ -91,6 +94,7 @@ export const projects: Project[] = [
   },
   {
     "slug": "logitrack",
+    "note": "Demo sign-in: username demo, password demo12345 (a public demo account).",
     "title": "LogiTrack",
     "kind": "Shipment tracking · Demo",
     "year": "2026",

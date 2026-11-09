@@ -2,11 +2,14 @@
 import Base from '../../layouts/Base.astro';
 import { projects } from '../../data/projects';
 import { cases } from '../../data/cases';
+import Snippet from '../../components/Snippet.astro';
+import snippets from '../../data/snippets.json';
 export function getStaticPaths() {
   return projects.map((p, i) => ({ params: { slug: p.slug }, props: { p, next: projects[(i + 1) % projects.length] } }));
 }
 const { p, next } = Astro.props;
 const c = cases[p.slug];
+const snips = (snippets as Record<string, any[]>)[p.slug] ?? [];
 ---
 <Base title={`${p.title} — Afolabi Peter`} description={p.summary}>
 <article class="wrap pb-16 pt-32 sm:pt-40">
@@ -25,6 +28,13 @@ const c = cases[p.slug];
     <div><dt class="eyebrow mb-1.5">Code</dt><dd><a class="text-accent hover:underline" href={p.repo} target="_blank" rel="noopener">GitHub ↗</a>{p.case && <> · <a class="text-accent hover:underline" href={p.case} target="_blank" rel="noopener">Case study ↗</a></>}</dd></div>
   </dl>
 
+  {(p.note || c?.ci) && (
+    <div class="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm">
+      {c?.ci && <a href={c.ci.url} target="_blank" rel="noopener" aria-label="GitHub Actions status for this project"><img src={c.ci.badge} alt="CI status" height="20" class="h-5 w-auto" /></a>}
+      {p.note && <p class="rounded-full border border-amber/40 bg-amber/10 px-3.5 py-1.5 text-amber">{p.note}</p>}
+    </div>
+  )}
+
   {c ? (
     <div class="mt-14 space-y-16">
       <section class="grid gap-6 md:grid-cols-[minmax(0,.6fr)_minmax(0,1.4fr)] md:gap-12">
@@ -42,6 +52,18 @@ const c = cases[p.slug];
         </section>
       )}
 
+      {c.video && (
+        <section aria-label="Walkthrough video"><video controls preload="none" poster={c.video.poster} class="w-full rounded-3xl border border-cream/10"><source src={c.video.src} type="video/mp4" /></video></section>
+      )}
+
+      {snips.length > 0 && (
+        <section>
+          <h2 class="eyebrow mb-3 !text-teal">The code behind the claims</h2>
+          <p class="mb-8 max-w-2xl text-cream/60">Each claim, the exact lines that make it true (pinned to a commit so the link never drifts), and the test that proves it.</p>
+          <div class="grid gap-6 lg:grid-cols-2">{snips.map((sn) => <Snippet {...sn} />)}</div>
+        </section>
+      )}
+
       <section>
         <h2 class="eyebrow mb-8 !text-teal">Decisions and why</h2>
         <ol class="divide-y divide-cream/10 border-y border-cream/10">
@@ -53,6 +75,12 @@ const c = cases[p.slug];
             </li>
           ))}
         </ol>
+      </section>
+
+      <section>
+        <h2 class="eyebrow mb-3 !text-teal">What I got wrong</h2>
+        <p class="mb-6 max-w-2xl text-cream/60">The gaps and mistakes, stated plainly, with what I did about them.</p>
+        <ul class="grid gap-4 md:grid-cols-2">{c.wrong.map((w) => <li class="card p-5 text-cream/80 sm:p-6">{w}</li>)}</ul>
       </section>
 
       <section class="grid gap-10 md:grid-cols-2">
