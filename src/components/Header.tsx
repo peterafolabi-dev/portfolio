@@ -60,7 +60,7 @@ export default function Header({ home = false }: { home?: boolean }) {
                 <a
                   href={l.href}
                   aria-current={active && l.id === active ? 'true' : undefined}
-                  className={`rounded-full px-4 py-2 text-sm transition ${active && l.id === active ? 'bg-cream/12 text-white' : 'text-cream/86 hover:bg-cream/8 hover:text-white'}`}
+                  className={`rounded-full px-4 py-2 text-sm transition ${active && l.id === active ? 'bg-cream/12 text-white' : 'text-cream/90 hover:bg-cream/8 hover:text-white'}`}
                 >
                   {l.label}
                 </a>
@@ -99,7 +99,7 @@ export default function Header({ home = false }: { home?: boolean }) {
                 </a>
               </li>
             ))}
-            <li className="flex gap-2 p-2 pt-3 text-sm text-cream/86">
+            <li className="flex gap-2 p-2 pt-3 text-sm text-cream/90">
               <a className="rounded-full border border-white/[.22] px-4 py-2" href="https://github.com/peterafolabi-dev" target="_blank" rel="noopener">GitHub ↗</a>
               <a className="rounded-full border border-white/[.22] px-4 py-2" href="https://www.linkedin.com/in/afolabi-peter-953669391" target="_blank" rel="noopener">LinkedIn ↗</a>
             </li>

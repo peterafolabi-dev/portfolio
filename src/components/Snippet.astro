@@ -8,14 +8,14 @@ const html = highlight(code, lang);
 <figure class="card overflow-hidden">
   <figcaption class="border-b border-white/[.14] p-5 sm:p-6">
     <h3 class="text-lg font-light tracking-tight sm:text-xl">{title}</h3>
-    <p class="mt-2 text-sm text-cream/82">{why}</p>
+    <p class="mt-2 text-sm text-cream/90">{why}</p>
   </figcaption>
-  <div class="flex items-center justify-between gap-3 border-b border-white/[.14] bg-ink/60 px-5 py-2.5 font-mono text-[11px] text-cream/72">
+  <div class="flex items-center justify-between gap-3 border-b border-white/[.14] bg-ink/60 px-5 py-2.5 font-mono text-[11px] text-cream/75">
     <span class="truncate">{file}</span>
     <a href={url} target="_blank" rel="noopener" class="shrink-0 text-accent hover:underline">View on GitHub ↗</a>
   </div>
   <pre class="no-scrollbar overflow-x-auto bg-ink/70 p-5 font-mono text-[12.5px] leading-relaxed text-cream/94 sm:p-6" tabindex="0"><code set:html={html} /></pre>
-  <p class="flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-white/[.14] px-5 py-3 font-mono text-[11px] text-cream/72 sm:px-6">
+  <p class="flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-white/[.14] px-5 py-3 font-mono text-[11px] text-cream/75 sm:px-6">
     <span class="text-teal">PROOF</span><span>{test}</span><a href={testUrl} target="_blank" rel="noopener" class="text-accent hover:underline">See the test ↗</a>
   </p>
 </figure>

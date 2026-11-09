@@ -54,7 +54,7 @@ export default function ProjectCarousel({ items }: { items: Item[] }) {
                 <div className="px-2 pb-2 pt-4">
                   <div className="flex items-baseline justify-between gap-3">
                     <h3 className="text-xl font-light tracking-tight transition group-hover:text-accent">{p.title}</h3>
-                    <span className="font-mono text-[11px] text-cream/86">0{i + 1}</span>
+                    <span className="font-mono text-[11px] text-cream/90">0{i + 1}</span>
                   </div>
                   <p className="mt-1 text-sm text-cream/92">{p.kind}</p>
                   <div className="mt-3 flex flex-wrap gap-1.5">

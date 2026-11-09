@@ -40,7 +40,7 @@ export default function CodePeek({ peek }: { peek: PeekData }) {
         <div className="overflow-hidden" {...(open ? {} : { inert: true as unknown as undefined })}>
           <p className="pb-3 pt-2 text-[13px] leading-snug text-cream/94">{peek.why}</p>
           <div className="overflow-hidden rounded-xl border border-white/[.14] bg-black/50 shadow-[inset_0_1px_0_rgba(255,255,255,.06)]">
-            <div className="flex items-center justify-between gap-2 border-b border-white/10 px-3 py-2 font-mono text-[10.5px] text-cream/86">
+            <div className="flex items-center justify-between gap-2 border-b border-white/10 px-3 py-2 font-mono text-[10.5px] text-cream/90">
               <span className="truncate">{peek.file}</span>
               <button type="button" onClick={copy} aria-live="polite" className="shrink-0 rounded-md border border-white/15 px-2 py-1 text-cream/90 transition hover:border-accent hover:text-white">
                 {copied ? 'Copied ✓' : 'Copy'}

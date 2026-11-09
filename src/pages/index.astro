@@ -56,9 +56,9 @@ const tools = [
         </div>
       </div>
       <dl class="card w-full max-w-sm p-5 font-mono text-[11px] uppercase tracking-[.1em] md:w-80">
-        <p class="mb-3 text-cream/60">[ Builder profile ]</p>
+        <p class="mb-3 text-cream/75">[ Builder profile ]</p>
         {[['Status', 'Open to work', true], ['Discipline', 'Full-stack', false], ['Focus', 'Fintech · Marketplaces', false], ['Base', 'Nigeria · Remote', false], ['Studying', 'FUT Minna · 2028', false]].map(([k, v, on]) => (
-          <div class="flex justify-between gap-4 border-t border-white/[.14] py-2"><dt class="text-cream/65">{k}</dt><dd class="text-right text-cream">{on && <span class="mr-1.5 inline-block size-1.5 rounded-full bg-accent"></span>}{v}</dd></div>
+          <div class="flex justify-between gap-4 border-t border-white/[.14] py-2"><dt class="text-cream/75">{k}</dt><dd class="text-right text-cream">{on && <span class="mr-1.5 inline-block size-1.5 rounded-full bg-accent"></span>}{v}</dd></div>
         ))}
       </dl>
     </div>
@@ -79,7 +79,7 @@ const tools = [
     </div>
     <div data-r class="mb-6 grid gap-4 sm:grid-cols-3">
       {[['4 × 200', 'invariants × generated ledgers, per push'], ['0 floats', 'money is whole kobo behind a branded type'], ['Offline', 'works with no network; each save is one atomic transaction']].map(([n, l]) => (
-        <div class="card p-5"><p class="bg-gradient-to-r from-accent to-amber bg-clip-text text-3xl font-extralight tracking-tight text-transparent sm:text-4xl">{n}</p><p class="mt-2 text-xs text-cream/78">{l}</p></div>
+        <div class="card p-5"><p class="bg-gradient-to-r from-accent to-amber bg-clip-text text-3xl font-extralight tracking-tight text-transparent sm:text-4xl">{n}</p><p class="mt-2 text-xs text-cream/90">{l}</p></div>
       ))}
     </div>
     <div data-r class="mb-6">
@@ -107,7 +107,7 @@ const tools = [
   </div>
   <ProjectCarousel client:visible items={items} />
   <div class="wrap mt-16">
-    <p data-r class="mb-5 font-mono text-xs uppercase tracking-[.18em] text-cream/70">Index — all work</p>
+    <p data-r class="mb-5 font-mono text-xs uppercase tracking-[.18em] text-cream/75">Index — all work</p>
     <WorkIndex />
   </div>
 </section>
@@ -116,14 +116,14 @@ const tools = [
   <div class="wrap">
     <div data-r class="mb-10 grid gap-4 md:grid-cols-2 md:items-end">
       <div><p class="eyebrow mb-4"><span class="text-accent">03</span> — Capabilities</p><h2 class="h2">How I can help</h2></div>
-      <p class="text-cream/82">From first schema to deployed, tested product, these are the things I’ve actually shipped.</p>
+      <p class="text-cream/90">From first schema to deployed, tested product, these are the things I’ve actually shipped.</p>
     </div>
     <ul class="grid gap-px overflow-hidden rounded-3xl border border-white/[.14] bg-cream/10 sm:grid-cols-2 lg:grid-cols-3">
       {caps.map(([t, d], i) => (
         <li data-r class="bg-panel/90 p-6 backdrop-blur-md transition hover:bg-slate/70 sm:p-8">
           <span class="font-mono text-xs text-accent">0{i + 1}</span>
           <h3 class="mt-3 text-lg font-normal tracking-tight">{t}</h3>
-          <p class="mt-2 text-sm text-cream/82">{d}</p>
+          <p class="mt-2 text-sm text-cream/90">{d}</p>
         </li>
       ))}
     </ul>
@@ -136,7 +136,7 @@ const tools = [
       {stats.map(([n, l], i) => (
         <div class={`p-6 sm:p-8 ${i < 2 ? 'border-b border-white/[.14] sm:border-b-0 sm:border-r' : ''}`}>
           <p class="bg-gradient-to-r from-accent via-amber to-teal bg-clip-text text-5xl font-extralight tracking-tighter text-transparent sm:text-7xl">{n}</p>
-          <p class="mt-3 text-xs text-cream/78 sm:text-sm">{l}</p>
+          <p class="mt-3 text-xs text-cream/90 sm:text-sm">{l}</p>
         </div>
       ))}
     </div>
@@ -152,15 +152,15 @@ const tools = [
           <div>
             <p class="font-mono text-xs uppercase tracking-widest text-accent">{j.when}</p>
             <h3 class="mt-3 text-2xl font-light tracking-tight">{j.role}</h3>
-            <p class="mt-1 text-cream/86">{j.org}</p>
-            <p class="mt-1 text-sm text-cream/65">{j.where}</p>
+            <p class="mt-1 text-cream/90">{j.org}</p>
+            <p class="mt-1 text-sm text-cream/75">{j.where}</p>
           </div>
           <ul class="space-y-3 text-cream/90">{j.pts.map((t) => <li class="flex gap-3"><span class="mt-2.5 size-1.5 shrink-0 rounded-full bg-teal"></span>{t}</li>)}</ul>
         </li>
       ))}
       <li data-r class="card flex flex-col gap-2 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
         <div><p class="font-mono text-xs uppercase tracking-widest text-accent">2024 – 2028</p><h3 class="mt-2 text-xl font-light tracking-tight">B.Eng. Computer Engineering, FUT Minna</h3></div>
-        <p class="text-sm text-cream/78">CGPA 3.79/5.00 · Frontend Development certificate, MALhub (Oct 2026)</p>
+        <p class="text-sm text-cream/90">CGPA 3.79/5.00 · Frontend Development certificate, MALhub (Oct 2026)</p>
       </li>
     </ol>
   </div>
@@ -183,7 +183,7 @@ const tools = [
         <li class="rounded-full border border-white/[.22] px-4 py-2">Internships</li>
         <li class="rounded-full border border-white/[.22] px-4 py-2">Based in Nigeria</li>
       </ul>
-      <p class="mt-6 font-mono text-xs uppercase tracking-widest text-cream/70">B.Eng. Computer Engineering · FUT Minna · 2024–2028</p>
+      <p class="mt-6 font-mono text-xs uppercase tracking-widest text-cream/75">B.Eng. Computer Engineering · FUT Minna · 2024–2028</p>
     </div>
   </div>
 </section>

@@ -24,7 +24,7 @@ export function highlight(code: string, lang: Lang): string {
       re.lastIndex = 0;
       while ((m = re.exec(line))) {
         out += esc(line.slice(last, m.index));
-        const cls = m[1] ? 'text-cream/55 italic' : m[2] ? 'text-teal' : m[3] ? 'text-accent' : 'text-amber';
+        const cls = m[1] ? 'text-cream/75 italic' : m[2] ? 'text-teal' : m[3] ? 'text-accent' : 'text-amber';
         out += `<span class="${cls}">${esc(m[0])}</span>`;
         last = m.index + m[0].length;
         if (m[0].length === 0) re.lastIndex++;

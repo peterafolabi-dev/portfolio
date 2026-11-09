@@ -6,5 +6,5 @@ export default function Clock() {
     const f = () => setT(new Date().toLocaleTimeString('en-GB', { timeZone: 'Africa/Lagos', hour: '2-digit', minute: '2-digit' }));
     f(); const id = setInterval(f, 30000); return () => clearInterval(id);
   }, []);
-  return <span className="font-mono text-sm text-cream/86">Lagos, Nigeria{t && ` · ${t}`}</span>;
+  return <span className="font-mono text-sm text-cream/90">Lagos, Nigeria{t && ` · ${t}`}</span>;
 }
