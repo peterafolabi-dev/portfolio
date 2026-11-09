@@ -13,7 +13,7 @@ const {
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL('/og.png', Astro.site).href;
-const ld = { '@context': 'https://schema.org', '@type': 'Person', name: 'Afolabi Peter', jobTitle: 'Junior Full-Stack Engineer', url: Astro.site?.href, email: 'mailto:afolabiprosper329@gmail.com', alumniOf: 'Federal University of Technology, Minna', sameAs: ['https://github.com/peterafolabi-dev', 'https://www.linkedin.com/in/afolabi-peter-953669391'] };
+const ld = { '@context': 'https://schema.org', '@type': 'Person', name: 'Afolabi Peter', jobTitle: 'Junior Full-Stack Engineer', url: Astro.site?.href, email: 'mailto:afolabiprosper329@gmail.com', alumniOf: 'Federal University of Technology, Minna', sameAs: ['https://github.com/peterafolabi-dev', 'https://www.linkedin.com/in/afolabipeter-dev'] };
 import AskPeter from '../components/AskPeter';
 import PageChrome from '../components/PageChrome';
 ---

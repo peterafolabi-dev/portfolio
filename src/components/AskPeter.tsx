@@ -4,7 +4,7 @@ import { projects } from '../data/projects';
 type Msg = { from: 'bot' | 'me'; text: string; links?: { label: string; href: string }[] };
 
 const EMAIL = 'afolabiprosper329@gmail.com';
-const LINKEDIN = 'https://www.linkedin.com/in/afolabi-peter-953669391';
+const LINKEDIN = 'https://www.linkedin.com/in/afolabipeter-dev';
 const GITHUB = 'https://github.com/peterafolabi-dev';
 
 const has = (q: string, words: string[]) => words.some((w) => q.includes(w));

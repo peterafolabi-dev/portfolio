@@ -36,4 +36,4 @@ Chat in production needs one environment variable, `GROQ_API_KEY`, set in the Ve
 
 ## Contact
 
-afolabiprosper329@gmail.com · [LinkedIn](https://www.linkedin.com/in/afolabi-peter-953669391) · [GitHub](https://github.com/peterafolabi-dev)
+afolabiprosper329@gmail.com · [LinkedIn](https://www.linkedin.com/in/afolabipeter-dev) · [GitHub](https://github.com/peterafolabi-dev)

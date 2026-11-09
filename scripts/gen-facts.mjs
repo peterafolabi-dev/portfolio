@@ -5,7 +5,7 @@ const { projects } = await import('../src/data/projects.ts');
 const { cases } = await import('../src/data/cases.ts');
 const facts = {
   person: 'Afolabi Peter, Junior Full-Stack Engineer in Nigeria (Lagos time, WAT). B.Eng. Computer Engineering at the Federal University of Technology, Minna, class of 2028, CGPA 3.79/5.00. Frontend Development certificate from MALhub (Oct 2026). Open to remote roles and internships.',
-  contact: { email: 'afolabiprosper329@gmail.com', linkedin: 'https://www.linkedin.com/in/afolabi-peter-953669391', github: 'https://github.com/peterafolabi-dev' },
+  contact: { email: 'afolabiprosper329@gmail.com', linkedin: 'https://www.linkedin.com/in/afolabipeter-dev', github: 'https://github.com/peterafolabi-dev' },
   experience: [
     'Software Engineering Intern at MALhub, Ilorin (Aug – Oct 2026, on-site industrial training): built Travel & Stays in React and Supabase; double bookings made impossible by a PostgreSQL exclusion constraint; Paystack payments verified server-side with 11 unit tests in CI.',
     'Customer Support & Sales Assistant at Tools by FK (Jul 2026 – now, remote, part-time): advises students and professionals on AI and digital tools, manages orders, subscription activations and account access.',

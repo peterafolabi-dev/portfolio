@@ -101,7 +101,7 @@ export default function Header({ home = false }: { home?: boolean }) {
             ))}
             <li className="flex gap-2 p-2 pt-3 text-sm text-cream/90">
               <a className="rounded-full border border-white/[.22] px-4 py-2" href="https://github.com/peterafolabi-dev" target="_blank" rel="noopener">GitHub ↗</a>
-              <a className="rounded-full border border-white/[.22] px-4 py-2" href="https://www.linkedin.com/in/afolabi-peter-953669391" target="_blank" rel="noopener">LinkedIn ↗</a>
+              <a className="rounded-full border border-white/[.22] px-4 py-2" href="https://www.linkedin.com/in/afolabipeter-dev" target="_blank" rel="noopener">LinkedIn ↗</a>
             </li>
           </ul>
         </div>
