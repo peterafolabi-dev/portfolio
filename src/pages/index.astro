@@ -4,9 +4,10 @@ import { projects } from '../data/projects';
 ---
 <Base home>
 <div id="top"></div>
-<section class="hero sq" id="hero" aria-label="Introduction"><div class="stick"><div class="bg" id="hbg" role="img" aria-label="Abstract warm light on a dark slate background"></div><canvas id="seq" width="560" height="560" role="img" aria-label="Portrait of Afolabi Peter, animated as you scroll"></canvas>
+<canvas id="seq" width="960" height="540" role="img" aria-label="Portrait of Afolabi Peter, animated as you scroll"></canvas><div id="vov" aria-hidden="true"></div>
+<section class="hero" id="hero" aria-label="Introduction">
 <div class="in"><h1><span><i>Afolabi</i></span><span><i>Peter</i></span></h1><p class="rt"><b>Junior Full-Stack Engineer</b>I build software people trust with money and data. Based in Nigeria, open to remote roles and internships.</p></div>
-<div class="cue mo" aria-hidden="true">Scroll to explore<i></i></div></div></section>
+<div class="cue mo" aria-hidden="true">Scroll to explore<i></i></div></section>
 
 <section class="st" id="stm" aria-label="Summary">Payments verified on the server. Bookings the database refuses to double. <span class="ac">Software</span> you can trust.</section>
 
@@ -16,9 +17,9 @@ import { projects } from '../data/projects';
 <a class="cd" href={`/work/${p.slug}/`} draggable="false"><div class="im"><img src={p.img} alt="" loading="lazy" draggable="false" />{!p.real && <span class="tg mo">Screenshot to add</span>}</div><div class="mt"><b>{p.title}</b><span class="mo">0{i+1} / {p.kind.split(" · ")[0]}</span></div></a>
 ))}
 </div><div class="pg" aria-hidden="true"><i id="pgi"></i></div>
-<p class="note">Six live projects, each with a live link and code on GitHub.</p></section>
+<p class="note"><a class="mo" href="/work/">All projects →</a> &nbsp; Six live projects, each with a live link and code on GitHub.</p></section>
 
-<section class="sec lt" id="about"><p class="mo"><b>02</b> — About</p><h2 class="rv">About</h2>
+<section class="sec" id="about"><p class="mo"><b>02</b> — About</p><h2 class="rv">About</h2>
 <div class="ab"><div class="ph rv"><img src="/img/portrait.jpg" alt="Portrait of Afolabi Peter" onerror="this.onerror=null;this.src='/img/about.jpg';this.alt='Abstract placeholder, portrait to be added'" /></div>
 <div class="rv"><p>I’m a Computer Engineering student at the Federal University of Technology, Minna, and a Junior Full-Stack Engineer who learns by shipping. I like the unglamorous layer: database constraints, payment verification, offline behaviour and tests that fail loudly.</p>
 <p class="q">Correctness is a feature you <b>can’t bolt on later.</b></p>

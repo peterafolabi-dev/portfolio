@@ -74,14 +74,12 @@ h2{font:200 clamp(40px,8vw,128px)/.95 var(--sa);letter-spacing:-.045em;text-tran
 .tpl{display:inline-block;background:var(--ac);color:#fff;padding:5px 10px;border-radius:99px;margin-bottom:14px}
 .nx{display:block;padding:8vh var(--p);border-top:1px solid var(--ln);text-decoration:none}.nx b{display:block;font:200 clamp(36px,8vw,120px)/1 var(--sa);letter-spacing:-.04em;text-transform:uppercase}.nx:hover b{color:var(--ac)}
 
-/* hero frame sequence (video method: scroll-scrubbed image sequence) */
-.hero.sq{height:420vh;display:block;overflow:visible;min-height:0}.hero.sq::after{display:none}
-.hero.sq .stick{position:sticky;top:0;height:100svh;overflow:hidden;display:flex;align-items:flex-end}
-.hero.sq .stick::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 45%,rgba(14,18,20,.8));z-index:1;pointer-events:none}
-.hero.sq .in{z-index:2}.hero.sq .cue{z-index:2}
-#seq{position:absolute;z-index:1;right:max(var(--p),6vw);top:50%;translate:0 -52%;height:min(72vh,640px);aspect-ratio:1;border-radius:8px}
-@media(max-width:800px){#seq{right:50%;translate:50% -66%;height:min(44vh,84vw)}}
-
+/* page-wide scroll animation (video method): frames play behind all content, ending at the footer */
+#seq{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;object-position:62% center;z-index:-2}
+#vov{position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(90deg,rgba(14,18,20,.82) 0%,rgba(14,18,20,.45) 45%,rgba(14,18,20,.12) 100%),linear-gradient(transparent 55%,rgba(14,18,20,.7))}
+@media(max-width:800px){#vov{background:rgba(14,18,20,.58)}}
+.hero .bg,.hero::after{display:none}
+.sec.lt,.lt{background:transparent;color:var(--fg)}.lt .mo{color:var(--mut)!important}.lt h2{color:var(--fg)}
 /* projects index */
 .wk{padding:clamp(110px,16vh,170px) var(--p) 90px;max-width:1400px;margin:0 auto}
 .wk h1{font-weight:200;font-size:clamp(56px,13vw,190px);line-height:.95;letter-spacing:-.03em;margin:.1em 0 .5em;text-transform:uppercase}
@@ -96,3 +94,8 @@ h2{font:200 clamp(40px,8vw,128px)/.95 var(--sa);letter-spacing:-.045em;text-tran
 .wl a:focus-visible{outline:2px solid #FF4A1C;outline-offset:4px}
 .back{display:inline-block;margin-top:40px;color:var(--mut)}
 @media(max-width:800px){.wl a{grid-template-columns:34px 1fr auto}.wl .s{display:none}.wl img{display:none}}
+
+/* projects page: subtle slate gradient + low-opacity orange-red glows, like the video */
+body.wkp{background:radial-gradient(60% 50% at 88% 6%,rgba(255,61,0,.16),transparent 70%),radial-gradient(50% 40% at 4% 55%,rgba(255,61,0,.10),transparent 70%),radial-gradient(55% 40% at 80% 98%,rgba(255,61,0,.13),transparent 70%),linear-gradient(180deg,#141a1d,#0e1214 60%,#12171a)}
+.wk .ds{max-width:560px;color:var(--mut);font-size:18px;margin:-.2em 0 3.2em}
+.wk-f{display:flex;justify-content:space-between;padding:28px var(--p);border-top:1px solid rgba(237,233,227,.18);color:var(--mut);font-size:14px}

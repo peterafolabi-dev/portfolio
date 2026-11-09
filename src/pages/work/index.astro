@@ -6,6 +6,7 @@ import { projects } from '../../data/projects';
 <section class="wk">
 <p class="mo" style="color:var(--mut)">Selected work · {projects.length} projects</p>
 <h1>Projects</h1>
+<p class="ds">Six real, shipped projects across fintech, marketplaces, e-commerce, edtech and logistics. Each one has a live demo, the code on GitHub, and a short case study.</p>
 <ul class="wl">
 {projects.map((p, i) => (
 <li><a href={`/work/${p.slug}/`}>
@@ -19,4 +20,6 @@ import { projects } from '../../data/projects';
 </ul>
 <a class="mo back" href="/">← Back home</a>
 </section>
+<footer class="wk-f"><span>© 2026 Afolabi Peter</span><a href="/#contact">Get in touch →</a></footer>
+<script is:inline>document.body.classList.add("wkp")</script>
 </Base>

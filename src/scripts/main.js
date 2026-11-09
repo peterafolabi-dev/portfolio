@@ -16,11 +16,11 @@ var st=$("#stm"),ws=[];if(st){st.innerHTML=st.innerHTML.replace(/(<span class="a
 /* reveal */
 var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{threshold:.12});$$(".rv").forEach(function(e){io.observe(e)});
 /* scroll: hero parallax + words */
-var hbg=$("#hbg");/* hero frame sequence */
+/* hero frame sequence */
 var SEQ_N=230,SEQ_P="/img/seq/",fr=[],cv=$("#seq"),cx=cv&&cv.getContext("2d"),hero=$("#hero"),lastF=-1,seqOK=false,heroIn=hero&&hero.querySelector(".in");
 function drawF(i){while(i>0&&!(fr[i].complete&&fr[i].naturalWidth))i--;var im=fr[i];if(!im||!im.complete||!im.naturalWidth||i===lastF)return;lastF=i;cv.width=im.naturalWidth;cv.height=im.naturalHeight;cx.drawImage(im,0,0)}
 if(cv){for(var q=1;q<=SEQ_N;q++){var im0=new Image();im0.src=SEQ_P+String(q).padStart(3,"0")+".jpg";fr.push(im0)}fr[0].onload=function(){seqOK=true;drawF(0)};fr[0].onerror=function(){cv.style.display="none"}}
-function seqTick(y,vh){if(!hero)return;var t=Math.min(1,Math.max(0,(y-hero.offsetTop)/(hero.offsetHeight-vh)));if(seqOK)drawF(rm?0:Math.min(SEQ_N-1,Math.round(t*(SEQ_N-1))));if(heroIn&&!rm)heroIn.style.opacity=String(Math.max(0,1-t*1.15))}
+function seqTick(y,vh){var max=document.documentElement.scrollHeight-vh,t=max>0?Math.min(1,Math.max(0,y/max)):0;if(seqOK)drawF(rm?0:Math.min(SEQ_N-1,Math.round(t*(SEQ_N-1))))}
 function tick(){var y=scrollY,vh=innerHeight;seqTick(y,vh);
 if(st){var r=st.getBoundingClientRect(),p=Math.min(1,Math.max(0,(vh*.85-r.top)/(r.height+vh*.3))),k=Math.round(p*ws.length);ws.forEach(function(w,i){w.classList.toggle("on",i<k)})}}
 addEventListener("scroll",tick,{passive:true});tick();
