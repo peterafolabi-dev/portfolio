@@ -52,7 +52,7 @@ export default function ProjectCarousel({ items }: { items: Item[] }) {
           >
             <div className="card overflow-hidden p-2.5 transition duration-500 group-hover:-translate-y-1.5 group-hover:border-accent/60">
               <div className="aspect-[16/10] overflow-hidden rounded-2xl bg-slate">
-                <img src={p.img} alt={`${p.title} screenshot`} loading="lazy" draggable={false} className="size-full object-cover transition duration-700 group-hover:scale-105" />
+                <img src={p.img} alt={`${p.title} screenshot`} draggable={false} className="size-full object-cover transition duration-700 group-hover:scale-105" />
               </div>
               <div className="px-2 pb-2 pt-4">
                 <div className="flex items-baseline justify-between gap-3">

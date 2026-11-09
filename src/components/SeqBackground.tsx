@@ -51,7 +51,7 @@ export default function SeqBackground() {
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none fixed inset-0 -z-10 bg-[linear-gradient(90deg,rgba(14,18,20,.85),rgba(14,18,20,.45)_55%,rgba(14,18,20,.15)),linear-gradient(transparent_55%,rgba(14,18,20,.7))] max-md:bg-ink/45"
+        className="pointer-events-none fixed inset-0 -z-10 bg-[linear-gradient(90deg,rgba(14,18,20,.8),rgba(14,18,20,.3)_50%,rgba(14,18,20,0)),linear-gradient(transparent_55%,rgba(14,18,20,.7))] max-md:bg-ink/35"
       />
     </>
   );
