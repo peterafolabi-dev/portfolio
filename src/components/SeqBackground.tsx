@@ -57,19 +57,30 @@ export default function SeqBackground() {
     for (let i = 0; i < COUNT; i++) { const im = new Image(); im.decoding = 'async'; frames.push(im); }
     // load first frame now, then every 8th frame (coarse turn first), then the rest, a few at a time (lean mode stops after every 4th)
     const all = Array.from({ length: COUNT }, (_, i) => i);
-    const order = lean
-      ? [0, ...all.filter((i) => i % 4 === 0 && i)]
-      : [0, ...all.filter((i) => i % 8 === 0 && i), ...all.filter((i) => i % 8 !== 0)];
-    let next = 0, dead = false;
+    const wanted = lean ? all.filter((i) => i % 4 === 0) : all;
+    const state = new Map<number, 'loading' | 'done'>();
+    let dead = false;
+    const target = () => (reduce ? 0 : Math.round(progress() * (COUNT - 1)));
+    // Frame 0 first, then whichever missing frame is closest to where the reader is scrolling now,
+    // so a fast scroll up or down lands on real frames instead of a far-away coarse one.
+    const nextFrame = () => {
+      if (!state.has(0)) return 0;
+      const t = target();
+      let best = -1, bd = 1e9;
+      for (const i of wanted) { if (state.has(i)) continue; const d = Math.abs(i - t); if (d < bd) { bd = d; best = i; } }
+      return best;
+    };
     const pump = () => {
-      if (dead || next >= order.length) return;
-      const i = order[next++];
+      if (dead) return;
+      const i = nextFrame();
+      if (i < 0) return;
+      state.set(i, 'loading');
       const im = frames[i];
-      im.onload = im.onerror = () => { if (i === 0) { ready = true; } update(); pump(); };
+      im.onload = im.onerror = () => { state.set(i, 'done'); if (i === 0) ready = true; update(); pump(); };
       im.src = src(i);
     };
+    const start = () => { for (let k = 0; k < 6; k++) pump(); };
     pump();
-    const start = () => { for (let k = 0; k < 3; k++) pump(); };
     if (document.readyState === 'complete') start(); else addEventListener('load', start, { once: true });
 
     const onResize = () => { fit(); update(); };
