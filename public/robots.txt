@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://afolabi-peter.vercel.app/sitemap.xml

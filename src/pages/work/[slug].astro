@@ -1,0 +1,16 @@
+---
+import Base from '../../layouts/Base.astro';
+import { projects } from '../../data/projects';
+export function getStaticPaths() { return projects.map((p, i) => ({ params: { slug: p.slug }, props: { p, next: projects[(i + 1) % projects.length] } })); }
+const { p, next } = Astro.props;
+---
+<Base title={`${p.title} — Afolabi Peter`} description={p.summary}>
+<article class="cs">
+<p class="mo" style="color:var(--mut)">Case study · {p.kind}</p><h1>{p.title}</h1>
+<div class="hero-im"><img src={p.img} alt={`${p.title} screenshot`} />{!p.real && <span class="tg mo" style="position:absolute;left:12px;top:12px">Screenshot to add</span>}</div>
+<div class="meta"><div><span class="mo">Year</span>{p.year}</div><div><span class="mo">Stack</span>{p.stack.join(', ')}</div><div><span class="mo">Live</span><a href={p.live} target="_blank" rel="noopener">{p.liveLabel} ↗</a></div><div><span class="mo">Code</span><a href={p.repo} target="_blank" rel="noopener">GitHub ↗</a>{p.case && <> · <a href={p.case} target="_blank" rel="noopener">Full case study ↗</a></>}</div></div>
+<div class="blk"><h2>What it is</h2><p>{p.summary}</p></div>
+<div class="blk"><h2>The hard part</h2><p>{p.hard}</p></div>
+</article>
+<a class="nx" href={`/work/${next.slug}/`}><span class="mo" style="color:var(--mut)">Next project</span><b>{next.title}</b></a>
+</Base>
