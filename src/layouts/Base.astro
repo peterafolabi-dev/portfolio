@@ -15,6 +15,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL('/og.png', Astro.site).href;
 const ld = { '@context': 'https://schema.org', '@type': 'Person', name: 'Afolabi Peter', jobTitle: 'Junior Full-Stack Engineer', url: Astro.site?.href, email: 'mailto:afolabiprosper329@gmail.com', alumniOf: 'Federal University of Technology, Minna', sameAs: ['https://github.com/peterafolabi-dev', 'https://www.linkedin.com/in/afolabi-peter-953669391'] };
 import AskPeter from '../components/AskPeter';
+import PageChrome from '../components/PageChrome';
 ---
 <!doctype html>
 <html lang="en">
@@ -40,6 +41,7 @@ import AskPeter from '../components/AskPeter';
 <Footer />
 <HireBar />
 <AskPeter client:idle />
+<PageChrome client:idle rail={home} />
 <script is:inline>
 (function(){var els=[].slice.call(document.querySelectorAll('[data-num]'));if(!els.length)return;var rm=matchMedia('(prefers-reduced-motion: reduce)').matches;if(rm||!('IntersectionObserver' in window))return;
 els.forEach(function(el){var t=el.textContent,parts=t.split(/(\d+)/);el.__p=parts;el.__t=t;el.textContent=parts.map(function(x,i){return i%2?'0':x}).join('')});

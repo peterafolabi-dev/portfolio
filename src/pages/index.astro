@@ -168,8 +168,8 @@ import BuildClock from '../components/BuildClock';
   <div class="wrap">
     <div data-r class="mb-10"><p class="eyebrow mb-4"><span class="text-accent">04</span> — Experience</p><h2 class="h2">Where I’ve worked</h2></div>
     <ol class="space-y-5">
-      {jobs.map((j) => (
-        <li data-r class="card grid gap-5 p-6 sm:p-8 md:grid-cols-[minmax(0,.8fr)_minmax(0,1.6fr)] md:gap-12">
+      {jobs.map((j, i) => (
+        <li data-r style={`--st:${6 + i * 1.25}rem`} class="card grid gap-5 p-6 sm:p-8 md:sticky md:top-(--st) md:bg-panel md:grid-cols-[minmax(0,.8fr)_minmax(0,1.6fr)] md:gap-12">
           <div>
             <p class="font-mono text-xs uppercase tracking-widest text-accent">{j.when}</p>
             <h3 class="mt-3 text-2xl font-medium tracking-tight">{j.role}</h3>
@@ -179,7 +179,7 @@ import BuildClock from '../components/BuildClock';
           <ul class="space-y-3 text-cream/90">{j.pts.map((t) => <li class="flex gap-3"><span class="mt-2.5 size-1.5 shrink-0 rounded-full bg-teal"></span>{t}</li>)}</ul>
         </li>
       ))}
-      <li data-r class="card flex flex-col gap-2 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+      <li data-r style="--st:8.5rem" class="card flex flex-col gap-2 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8 md:sticky md:top-(--st) md:bg-panel">
         <div><p class="font-mono text-xs uppercase tracking-widest text-accent">2024 – 2028</p><h3 class="mt-2 text-xl font-medium tracking-tight">B.Eng. Computer Engineering, FUT Minna</h3></div>
         <p class="text-sm text-cream/90">CGPA 3.79/5.00 · Frontend Development certificate, MALhub (Oct 2026)</p>
       </li>
