@@ -14,7 +14,8 @@
 
 @layer base {
   html { scroll-behavior: smooth; overflow-x: clip; scroll-padding-top: 6rem; }
-  body { @apply bg-ink text-cream font-sans font-light antialiased; }
+  html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; -webkit-text-size-adjust: 100%; }
+  body { @apply bg-ink text-cream font-sans font-normal antialiased; }
   ::selection { background: var(--color-accent); color: #fff; }
   :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
 }
@@ -24,9 +25,9 @@
   .eyebrow { @apply font-mono text-xs uppercase tracking-[0.18em] text-cream/60; }
   .h2 { @apply text-4xl font-extralight uppercase leading-[0.95] tracking-tight sm:text-6xl lg:text-7xl; }
   .btn { @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition duration-300 active:scale-95; }
-  .btn-primary { @apply bg-accent text-white hover:bg-amber hover:text-ink; }
-  .btn-ghost { @apply border border-cream/25 text-cream hover:border-cream hover:bg-cream hover:text-ink; }
-  .card { @apply rounded-3xl border border-cream/10 bg-panel/80 backdrop-blur-md; }
+  .btn-primary { @apply bg-accent text-white shadow-[inset_0_1px_0_rgba(255,255,255,.28),0_0_0_1px_rgba(255,74,28,.55),0_8px_28px_-6px_rgba(255,74,28,.6)] hover:bg-amber hover:text-ink hover:shadow-[inset_0_1px_0_rgba(255,255,255,.4),0_0_0_1px_rgba(255,179,71,.6),0_8px_28px_-6px_rgba(255,179,71,.55)]; }
+  .btn-ghost { @apply border border-white/40 text-cream hover:border-cream hover:bg-cream hover:text-ink; }
+  .card { @apply rounded-3xl border border-white/[.14] bg-panel/90 backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,.09),0_1px_2px_rgba(0,0,0,.6),0_18px_40px_-18px_rgba(0,0,0,.85)]; }
 }
 
 /* scroll reveal: only hidden when JS is running */

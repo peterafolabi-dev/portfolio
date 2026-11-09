@@ -1,13 +1,13 @@
 ---
 import { projects } from '../data/projects';
 ---
-<ul class="divide-y divide-cream/10 border-y border-cream/10" aria-label="All projects">
+<ul class="divide-y divide-white/[.12] border-y border-white/[.14]" aria-label="All projects">
   {projects.map((p) => (
     <li data-r>
       <a href={`/work/${p.slug}/`} class="group grid grid-cols-[auto_1fr] items-center gap-x-6 gap-y-3 py-5 transition hover:bg-cream/[.03] sm:grid-cols-[5.5rem_minmax(0,1.1fr)_minmax(0,1.4fr)_auto] sm:px-3">
-        <span class="font-mono text-xs text-cream/50">{p.year.match(/\d{4}/)?.[0]}</span>
+        <span class="font-mono text-xs text-cream/70">{p.year.match(/\d{4}/)?.[0]}</span>
         <span class="text-lg font-light tracking-tight transition group-hover:translate-x-1 group-hover:text-accent sm:text-xl">{p.title}</span>
-        <span class="col-span-2 flex flex-wrap gap-1.5 sm:col-span-1">{p.stack.slice(0, 3).map((s) => <span class="rounded-full border border-cream/12 px-2.5 py-0.5 font-mono text-[10.5px] text-cream/65">{s}</span>)}</span>
+        <span class="col-span-2 flex flex-wrap gap-1.5 sm:col-span-1">{p.stack.slice(0, 3).map((s) => <span class="rounded-full border border-white/20 px-2.5 py-0.5 font-mono text-[10.5px] text-cream/82">{s}</span>)}</span>
         <span class="hidden h-9 w-16 overflow-hidden rounded-md bg-slate opacity-70 transition group-hover:opacity-100 sm:block"><img src={p.img} alt="" class="size-full object-cover" /></span>
       </a>
     </li>

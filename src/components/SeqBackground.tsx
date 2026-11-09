@@ -18,6 +18,17 @@ export default function SeqBackground() {
     let last = -1;
     let ready = false;
 
+    // Retina-sharp drawing: the canvas backing store is sized to its CSS box x devicePixelRatio,
+    // and each frame is drawn with "cover" scaling at that resolution (no CSS up-scaling of a small bitmap).
+    let dpr = 1, cw = 0, ch = 0;
+    const fit = () => {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const r = cv.getBoundingClientRect();
+      cw = Math.max(1, Math.round(r.width * dpr));
+      ch = Math.max(1, Math.round(r.height * dpr));
+      if (cv.width !== cw || cv.height !== ch) { cv.width = cw; cv.height = ch; }
+      last = -1;
+    };
     const draw = (i: number) => {
       const ok = (k: number) => !!(frames[k]?.complete && frames[k].naturalWidth);
       let lo = i, hi = i;
@@ -27,8 +38,12 @@ export default function SeqBackground() {
       const im = frames[i];
       if (!im || !im.naturalWidth || i === last) return;
       last = i;
-      if (cv.width !== im.naturalWidth) { cv.width = im.naturalWidth; cv.height = im.naturalHeight; }
-      cx.drawImage(im, 0, 0);
+      const scale = Math.max(cw / im.naturalWidth, ch / im.naturalHeight);
+      const w = im.naturalWidth * scale, h = im.naturalHeight * scale;
+      const px = 0.5; // frames are pre-cropped around the subject
+      cx.imageSmoothingEnabled = true;
+      cx.imageSmoothingQuality = 'high';
+      cx.drawImage(im, (cw - w) * px, (ch - h) * 0.5, w, h);
     };
     const progress = () => {
       const max = document.documentElement.scrollHeight - innerHeight;
@@ -51,20 +66,20 @@ export default function SeqBackground() {
     const start = () => { for (let k = 0; k < 3; k++) pump(); };
     if (document.readyState === 'complete') start(); else addEventListener('load', start, { once: true });
 
+    const onResize = () => { fit(); update(); };
+    fit();
     addEventListener('scroll', update, { passive: true });
-    addEventListener('resize', update);
-    return () => { dead = true; removeEventListener('scroll', update); removeEventListener('resize', update); };
+    addEventListener('resize', onResize);
+    return () => { dead = true; removeEventListener('scroll', update); removeEventListener('resize', onResize); };
   }, []);
 
   return (
     <>
       <canvas
         ref={ref}
-        width={960}
-        height={540}
         role="img"
         aria-label="Portrait of Afolabi Peter, animated as you scroll"
-        className="fixed inset-y-0 right-0 -z-20 h-full w-full object-cover object-[70%_center] md:w-[68%] md:object-center md:[mask-image:linear-gradient(90deg,transparent,#000_28%)]"
+        className="fixed inset-y-0 right-0 -z-20 h-full w-full md:w-[68%] md:[mask-image:linear-gradient(90deg,transparent,#000_28%)]"
       />
       <div
         aria-hidden="true"

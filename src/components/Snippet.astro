@@ -1,36 +1,21 @@
 ---
-interface Props { title: string; file: string; lang: 'ts' | 'sql'; why: string; code: string; url: string; test: string; testUrl: string }
+interface Props { title: string; file: string; lang: 'ts' | 'sql' | 'py'; why: string; code: string; url: string; test: string; testUrl: string }
+import { highlight } from '../lib/highlight';
 const { title, file, lang, why, code, url, test, testUrl } = Astro.props;
 
-const kw = lang === 'sql'
-  ? /\b(constraint|exclude|using|gist|with|where|in|and|or|not|create|table|alter|add|check|primary|key|references|on|delete|cascade|default|null)\b/gi
-  : /\b(export|async|function|const|let|for|if|return|try|catch|await|new|type|interface|from|import|it|expect)\b/g;
-const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-// one pass: comments, strings, keywords, numbers
-const re = new RegExp(`(${lang === 'sql' ? '--.*$' : '\\/\\/.*$'})|('(?:[^'\\\\]|\\\\.)*'|"(?:[^"\\\\]|\\\\.)*"|\`(?:[^\`\\\\]|\\\\.)*\`)|(${kw.source})|(\\b\\d[\\d_.]*\\b)`, 'gim');
-const html = code.split('\n').map((line) => {
-  let out = ''; let last = 0; let m: RegExpExecArray | null; re.lastIndex = 0;
-  while ((m = re.exec(line))) {
-    out += esc(line.slice(last, m.index));
-    const cls = m[1] ? 'text-cream/40 italic' : m[2] ? 'text-teal' : m[3] ? 'text-accent' : 'text-amber';
-    out += `<span class="${cls}">${esc(m[0])}</span>`;
-    last = m.index + m[0].length;
-    if (m[0].length === 0) re.lastIndex++;
-  }
-  return out + esc(line.slice(last));
-}).join('\n');
+const html = highlight(code, lang);
 ---
 <figure class="card overflow-hidden">
-  <figcaption class="border-b border-cream/10 p-5 sm:p-6">
+  <figcaption class="border-b border-white/[.14] p-5 sm:p-6">
     <h3 class="text-lg font-light tracking-tight sm:text-xl">{title}</h3>
-    <p class="mt-2 text-sm text-cream/65">{why}</p>
+    <p class="mt-2 text-sm text-cream/82">{why}</p>
   </figcaption>
-  <div class="flex items-center justify-between gap-3 border-b border-cream/10 bg-ink/60 px-5 py-2.5 font-mono text-[11px] text-cream/55">
+  <div class="flex items-center justify-between gap-3 border-b border-white/[.14] bg-ink/60 px-5 py-2.5 font-mono text-[11px] text-cream/72">
     <span class="truncate">{file}</span>
     <a href={url} target="_blank" rel="noopener" class="shrink-0 text-accent hover:underline">View on GitHub ↗</a>
   </div>
-  <pre class="no-scrollbar overflow-x-auto bg-ink/70 p-5 font-mono text-[12.5px] leading-relaxed text-cream/85 sm:p-6" tabindex="0"><code set:html={html} /></pre>
-  <p class="flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-cream/10 px-5 py-3 font-mono text-[11px] text-cream/55 sm:px-6">
+  <pre class="no-scrollbar overflow-x-auto bg-ink/70 p-5 font-mono text-[12.5px] leading-relaxed text-cream/94 sm:p-6" tabindex="0"><code set:html={html} /></pre>
+  <p class="flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-white/[.14] px-5 py-3 font-mono text-[11px] text-cream/72 sm:px-6">
     <span class="text-teal">PROOF</span><span>{test}</span><a href={testUrl} target="_blank" rel="noopener" class="text-accent hover:underline">See the test ↗</a>
   </p>
 </figure>

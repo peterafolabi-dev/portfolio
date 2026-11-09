@@ -31,6 +31,7 @@ export const cases: Record<string, Case> = {
       'Zero runtime dependencies beyond React; about 68 kB of JavaScript after gzip',
     ],
     next: ['Sync across devices using the existing hash-linked log', 'Encrypted cloud backup with a PIN-derived key', 'Inventory by item so cost of goods sold is calculated', 'Review of the tax logic by a Nigerian chartered accountant'],
+    video: { src: '/video/oja-ledger-tour.mp4', poster: '/img/oja-tour-poster.jpg' },
     ci: { badge: 'https://github.com/peterafolabi-dev/oja-ledger/actions/workflows/ci.yml/badge.svg', url: 'https://github.com/peterafolabi-dev/oja-ledger/actions/workflows/ci.yml' },
     wrong: [
       'My own test had a bug. The first property-test run found a signed-zero (−0) bug in my reversal test. Hand-written example tests would never have hit it.',

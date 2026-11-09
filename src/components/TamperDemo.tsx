@@ -74,11 +74,11 @@ export default function TamperDemo() {
   };
   const reset = async () => { const r = await sealAll(START); setStored(r); setEdits({}); setNoted(r.at(-1)!.hash); };
 
-  if (!supported) return <p className="card p-6 text-cream/70">This demo needs a secure (https) page to use the browser’s SHA-256.</p>;
+  if (!supported) return <p className="card p-6 text-cream/86">This demo needs a secure (https) page to use the browser’s SHA-256.</p>;
 
   return (
     <div className="card overflow-hidden">
-      <div className={`flex flex-wrap items-center justify-between gap-3 border-b border-cream/10 px-5 py-4 sm:px-6 ${chainOk ? (fingerprintMatches ? 'bg-teal/10' : 'bg-amber/10') : 'bg-accent/15'}`} role="status" aria-live="polite">
+      <div className={`flex flex-wrap items-center justify-between gap-3 border-b border-white/[.14] px-5 py-4 sm:px-6 ${chainOk ? (fingerprintMatches ? 'bg-teal/10' : 'bg-amber/10') : 'bg-accent/15'}`} role="status" aria-live="polite">
         <p className="text-sm font-medium sm:text-base">
           {!chainOk
             ? `✗ Entry #${firstBad + 1} was changed after it was recorded`
@@ -86,38 +86,38 @@ export default function TamperDemo() {
               ? '✓ Books balanced and sealed'
               : '⚠ Chain is valid again, but the fingerprint is not the one you wrote down'}
         </p>
-        <p className="font-mono text-[11px] uppercase tracking-widest text-cream/55">Fingerprint now: {headNow ? short(headNow) : '…'}</p>
+        <p className="font-mono text-[11px] uppercase tracking-widest text-cream/72">Fingerprint now: {headNow ? short(headNow) : '…'}</p>
       </div>
 
-      <ol className="divide-y divide-cream/10">
+      <ol className="divide-y divide-white/[.12]">
         {stored.map((r, i) => {
           const s = status[i] ?? { kind: 'ok' };
           const bad = s.kind !== 'ok';
           const amount = edits[i] !== undefined ? edits[i] : r.kobo / 100;
           return (
             <li key={i} className={`grid grid-cols-[2rem_1fr_auto] items-center gap-x-3 gap-y-1 px-5 py-3.5 sm:grid-cols-[2rem_1.4fr_9rem_1fr_6.5rem] sm:px-6 ${bad ? 'bg-accent/[.07]' : ''}`}>
-              <span className="font-mono text-xs text-cream/45">#{i + 1}</span>
+              <span className="font-mono text-xs text-cream/65">#{i + 1}</span>
               <span className="text-sm">{r.memo}</span>
               <label className="flex items-center justify-end gap-1 sm:justify-start">
-                <span className="text-cream/50">₦</span>
+                <span className="text-cream/70">₦</span>
                 <input
                   type="number" inputMode="numeric" value={amount}
                   onChange={(e) => { const v = Number(e.target.value); setEdits((p) => (Number.isFinite(v) && v !== r.kobo / 100 ? { ...p, [i]: v } : (({ [i]: _drop, ...rest }) => rest)(p))); }}
                   aria-label={`Amount for entry ${i + 1} in naira`}
-                  className="w-28 rounded-md border border-cream/15 bg-ink/60 px-2 py-1.5 font-mono text-sm focus:border-accent focus:outline-none"
+                  className="w-28 rounded-md border border-white/[.22] bg-ink/60 px-2 py-1.5 font-mono text-sm focus:border-accent focus:outline-none"
                 />
               </label>
-              <span className="col-span-2 font-mono text-[11px] text-cream/40 sm:col-span-1">seal {short(r.hash)}</span>
+              <span className="col-span-2 font-mono text-[11px] text-cream/60 sm:col-span-1">seal {short(r.hash)}</span>
               <span className={`justify-self-end font-mono text-[11px] uppercase tracking-wider ${bad ? 'text-accent' : 'text-teal'}`}>{bad ? 'changed' : 'sealed'}</span>
             </li>
           );
         })}
       </ol>
 
-      <div className="flex flex-wrap items-center gap-3 border-t border-cream/10 px-5 py-4 sm:px-6">
+      <div className="flex flex-wrap items-center gap-3 border-t border-white/[.14] px-5 py-4 sm:px-6">
         <button onClick={reset} className="btn btn-ghost !px-4 !py-2 text-xs" disabled={!edited && chainOk && fingerprintMatches}>Restore</button>
         <button onClick={forge} className="btn btn-ghost !px-4 !py-2 text-xs" disabled={!edited}>Try to cover it up (recompute the hashes)</button>
-        <p className="w-full text-xs text-cream/50 sm:w-auto sm:flex-1 sm:text-right">
+        <p className="w-full text-xs text-cream/70 sm:w-auto sm:flex-1 sm:text-right">
           Edit any amount. Covering it up repairs the chain but changes the fingerprint, so it only gets caught if the owner wrote the old one down. Tamper-evident, not tamper-proof.
         </p>
       </div>

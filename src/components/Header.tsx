@@ -47,7 +47,7 @@ export default function Header({ home = false }: { home?: boolean }) {
       <div className="w-full max-w-3xl">
         <nav
           aria-label="Primary"
-          className="flex items-center justify-between gap-2 rounded-full border border-cream/10 bg-ink/70 p-1.5 pl-2 shadow-[0_10px_40px_-10px_rgba(0,0,0,.7)] backdrop-blur-xl"
+          className="flex items-center justify-between gap-2 rounded-full border border-white/[.14] bg-ink/70 p-1.5 pl-2 shadow-[0_10px_40px_-10px_rgba(0,0,0,.7)] backdrop-blur-xl"
         >
           <a href={home ? '#top' : '/'} className="flex items-center gap-2 rounded-full pr-2 text-sm font-semibold" aria-label="Afolabi Peter, home">
             <span className="grid size-9 place-items-center rounded-full bg-accent text-[13px] font-semibold text-white">AP</span>
@@ -60,7 +60,7 @@ export default function Header({ home = false }: { home?: boolean }) {
                 <a
                   href={l.href}
                   aria-current={active && l.id === active ? 'true' : undefined}
-                  className={`rounded-full px-4 py-2 text-sm transition ${active && l.id === active ? 'bg-cream/12 text-white' : 'text-cream/70 hover:bg-cream/8 hover:text-white'}`}
+                  className={`rounded-full px-4 py-2 text-sm transition ${active && l.id === active ? 'bg-cream/12 text-white' : 'text-cream/86 hover:bg-cream/8 hover:text-white'}`}
                 >
                   {l.label}
                 </a>
@@ -76,7 +76,7 @@ export default function Header({ home = false }: { home?: boolean }) {
               aria-controls="mobile-menu"
               aria-label={open ? 'Close menu' : 'Open menu'}
               onClick={() => setOpen((o) => !o)}
-              className="grid size-10 place-items-center rounded-full border border-cream/15 md:hidden"
+              className="grid size-10 place-items-center rounded-full border border-white/[.22] md:hidden"
             >
               <span className="relative block h-3 w-4">
                 <span className={`absolute left-0 h-px w-4 bg-cream transition ${open ? 'top-1.5 rotate-45' : 'top-0'}`} />
@@ -89,7 +89,7 @@ export default function Header({ home = false }: { home?: boolean }) {
 
         <div
           id="mobile-menu"
-          className={`mt-2 origin-top overflow-hidden rounded-3xl border border-cream/10 bg-ink/90 backdrop-blur-xl transition-all duration-300 md:hidden ${open ? 'max-h-96 opacity-100' : 'pointer-events-none max-h-0 border-transparent opacity-0'}`}
+          className={`mt-2 origin-top overflow-hidden rounded-3xl border border-white/[.14] bg-ink/90 backdrop-blur-xl transition-all duration-300 md:hidden ${open ? 'max-h-96 opacity-100' : 'pointer-events-none max-h-0 border-transparent opacity-0'}`}
         >
           <ul className="p-2">
             {links.map((l) => (
@@ -99,9 +99,9 @@ export default function Header({ home = false }: { home?: boolean }) {
                 </a>
               </li>
             ))}
-            <li className="flex gap-2 p-2 pt-3 text-sm text-cream/70">
-              <a className="rounded-full border border-cream/15 px-4 py-2" href="https://github.com/peterafolabi-dev" target="_blank" rel="noopener">GitHub ↗</a>
-              <a className="rounded-full border border-cream/15 px-4 py-2" href="https://www.linkedin.com/in/afolabi-peter-953669391" target="_blank" rel="noopener">LinkedIn ↗</a>
+            <li className="flex gap-2 p-2 pt-3 text-sm text-cream/86">
+              <a className="rounded-full border border-white/[.22] px-4 py-2" href="https://github.com/peterafolabi-dev" target="_blank" rel="noopener">GitHub ↗</a>
+              <a className="rounded-full border border-white/[.22] px-4 py-2" href="https://www.linkedin.com/in/afolabi-peter-953669391" target="_blank" rel="noopener">LinkedIn ↗</a>
             </li>
           </ul>
         </div>
