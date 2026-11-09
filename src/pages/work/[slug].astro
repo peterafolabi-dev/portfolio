@@ -53,7 +53,7 @@ const snips = (snippets as Record<string, any[]>)[p.slug] ?? [];
       )}
 
       {c.video && (
-        <section aria-label="Walkthrough video"><video controls preload="none" playsinline poster={c.video.poster} class="w-full rounded-3xl border border-white/[.14]"><source src={c.video.src} type="video/mp4" /></video></section>
+        <section aria-label="Walkthrough video"><video controls preload="none" playsinline poster={c.video.poster} class="mx-auto aspect-video w-full max-w-3xl rounded-3xl border border-white/[.14] bg-black"><source src={c.video.src} type="video/mp4" /></video></section>
       )}
 
       {snips.length > 0 && (
