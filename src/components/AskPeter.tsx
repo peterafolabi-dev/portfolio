@@ -51,7 +51,7 @@ const SUGGEST = ['What has Peter built?', 'Tell me about Oja Ledger', 'How does 
 
 export default function AskPeter() {
   const [open, setOpen] = useState(false);
-  const [msgs, setMsgs] = useState<Msg[]>([{ from: 'bot', text: 'Hi, I am a small scripted assistant. I answer only from the content of this site. Ask away, or tap a question.' }]);
+  const [msgs, setMsgs] = useState<Msg[]>([{ from: 'bot', text: 'Hi! I answer questions about Peter using only what is on this site. Ask away, or tap a question.' }]);
   const [val, setVal] = useState('');
   const end = useRef<HTMLDivElement>(null);
   const input = useRef<HTMLInputElement>(null);
@@ -64,12 +64,31 @@ export default function AskPeter() {
     return () => removeEventListener('keydown', k);
   }, []);
 
-  const ask = (t: string) => {
+  const [ai, setAi] = useState(false);
+  const [busy, setBusy] = useState(false);
+
+  // Tries the AI endpoint (Groq, via /api/chat). If it is not configured or fails, the scripted answers still work.
+  const ask = async (t: string) => {
     const text = t.trim();
-    if (!text) return;
+    if (!text || busy) return;
+    const history = [...msgs.filter((m) => m !== msgs[0]).map((m) => ({ role: m.from === 'me' ? 'user' : 'assistant', content: m.text })), { role: 'user', content: text }];
     setMsgs((m) => [...m, { from: 'me', text }]);
     setVal('');
-    setTimeout(() => setMsgs((m) => [...m, answer(text)]), 350);
+    setBusy(true);
+    try {
+      const r = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: history }) });
+      if (!r.ok) throw new Error(String(r.status));
+      const j = await r.json();
+      if (!j.reply) throw new Error('empty');
+      setAi(true);
+      setMsgs((m) => [...m, { from: 'bot', text: j.reply }]);
+    } catch {
+      setAi(false);
+      await new Promise((ok) => setTimeout(ok, 300));
+      setMsgs((m) => [...m, answer(text)]);
+    } finally {
+      setBusy(false);
+    }
   };
 
   return (
@@ -77,7 +96,7 @@ export default function AskPeter() {
       {open && (
         <div role="dialog" aria-label="Ask about Peter" className="mb-3 flex h-[min(32rem,70vh)] w-[min(22rem,calc(100vw-1.5rem))] flex-col overflow-hidden rounded-3xl border border-white/20 bg-ink/95 shadow-[0_20px_60px_-10px_rgba(0,0,0,.9),0_0_30px_rgba(255,74,28,.12)] backdrop-blur-xl">
           <div className="flex items-center justify-between border-b border-white/[.14] px-4 py-3">
-            <div><p className="text-sm font-semibold text-white">Ask about Peter</p><p className="font-mono text-[10px] uppercase tracking-widest text-cream/75">Scripted · answers from this site</p></div>
+            <div><p className="text-sm font-semibold text-white">Ask about Peter</p><p className="font-mono text-[10px] uppercase tracking-widest text-cream/75">{ai ? 'AI (Groq) · may make mistakes' : 'Answers from this site'}</p></div>
             <button type="button" onClick={() => setOpen(false)} aria-label="Close chat" className="grid size-8 place-items-center rounded-full text-cream/90 hover:bg-white/10">✕</button>
           </div>
           <div className="flex-1 space-y-3 overflow-y-auto px-4 py-4" aria-live="polite">
@@ -94,7 +113,7 @@ export default function AskPeter() {
           </div>
           <form onSubmit={(e) => { e.preventDefault(); ask(val); }} className="flex gap-2 border-t border-white/[.14] p-3">
             <input ref={input} value={val} onChange={(e) => setVal(e.target.value)} placeholder="Ask about projects, tests, hiring…" aria-label="Your question" className="min-w-0 flex-1 rounded-full border border-white/20 bg-transparent px-4 py-2.5 text-sm text-white placeholder:text-cream/60 focus:border-accent focus:outline-none" />
-            <button type="submit" className="rounded-full bg-accent px-4 text-sm font-medium text-white active:scale-95">Send</button>
+            <button type="submit" disabled={busy} className="rounded-full bg-accent px-4 text-sm font-medium text-white active:scale-95 disabled:opacity-60">{busy ? '…' : 'Send'}</button>
           </form>
         </div>
       )}
