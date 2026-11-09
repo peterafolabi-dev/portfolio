@@ -1,18 +1,21 @@
-# Afolabi Peter — portfolio (Astro)
+# Afolabi Peter: portfolio
 
-Prototype built with Astro. Sample project cards only; replace in `src/data/projects.ts`.
+Live: **https://portfolio-one-kappa-p2gg1ejjj4.vercel.app**
 
-    npm install
-    npm run dev       # local preview
-    npm run build     # outputs ./dist
+My portfolio as a junior full-stack engineer: six real projects, each with a case study covering the problem, my decisions and what I got wrong. No invented clients or metrics.
 
-Deploy: import the repo in Vercel (Astro is auto-detected, no settings needed).
+## What's on it
 
-Add `public/img/portrait.jpg` for the hero and About photo. Edit `projects.ts` for real case studies.
-
+- A scroll-scrubbed hero: 190 video frames drawn to a canvas by scroll position, with lighter frame sets for phones and slow connections.
+- Case studies for Oja Ledger, Travel & Stays, RedCart, StudyFlow, LogiTrack and SpendWise.
+- "Ask about Peter", a chat that answers only questions about me, backed by a Vercel serverless function calling Groq (`api/chat.js`). Without a key it falls back to scripted answers.
+- A live Lagos clock, count-up numbers, a section rail and a scroll progress bar.
 
 ## Stack
-Astro 7 (static pages) · React 19 islands (header, scroll background, project carousel) · Tailwind CSS 4 · TypeScript.
+
+Astro 7 (static pages) · React 19 islands · Tailwind CSS 4 · TypeScript · Vercel.
+
+## Run it
 
 ```bash
 npm install
@@ -20,4 +23,17 @@ npm run dev      # http://localhost:4321
 npm run build    # static output in dist/
 ```
 
-The hero animation is 230 JPG frames in `public/img/seq/` (001.jpg to 230.jpg), scrubbed on scroll by `src/components/SeqBackground.tsx`. Replace the frames to change the animation.
+Chat in production needs one environment variable, `GROQ_API_KEY`, set in the Vercel project.
+
+## Where things live
+
+| Path | What |
+|---|---|
+| `src/data/projects.ts`, `cases.ts` | Project cards and case-study content |
+| `src/components/SeqBackground.tsx` | Scroll-scrubbed hero canvas |
+| `api/chat.js`, `api/_facts.json` | Chat endpoint and the facts it may use |
+| `scripts/gen-facts.mjs` | Regenerates `_facts.json` from the data files |
+
+## Contact
+
+afolabiprosper329@gmail.com · [LinkedIn](https://www.linkedin.com/in/afolabi-peter-953669391) · [GitHub](https://github.com/peterafolabi-dev)
