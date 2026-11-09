@@ -17,7 +17,7 @@ export default function Dots() {
     const size = () => {
       const r = cv.getBoundingClientRect();
       w = r.width; h = r.height; cv.width = w * dpr; cv.height = h * dpr; cx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const n = Math.round(Math.min(46, Math.max(18, w / 30)));
+      const n = Math.round(Math.min(26, Math.max(10, w / 55)));
       dots = Array.from({ length: n }, () => ({
         x: Math.random() * w, y: Math.random() * h, vx: (Math.random() - .5) * .25, vy: (Math.random() - .5) * .25,
         r: 1.5 + Math.random() * 2.2, c: COLORS[(Math.random() * COLORS.length) | 0],
@@ -30,7 +30,7 @@ export default function Dots() {
         if (dist < 120) { d.x += (dx / dist) * 1.4; d.y += (dy / dist) * 1.4; }
         d.x += d.vx; d.y += d.vy;
         if (d.x < 0) d.x = w; if (d.x > w) d.x = 0; if (d.y < 0) d.y = h; if (d.y > h) d.y = 0;
-        cx.globalAlpha = .55; cx.fillStyle = d.c; cx.beginPath(); cx.arc(d.x, d.y, d.r, 0, 6.283); cx.fill();
+        cx.globalAlpha = .35; cx.fillStyle = d.c; cx.beginPath(); cx.arc(d.x, d.y, d.r, 0, 6.283); cx.fill();
       }
       if (visible && !reduce) raf = requestAnimationFrame(tick);
     };

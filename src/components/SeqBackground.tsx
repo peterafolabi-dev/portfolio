@@ -18,7 +18,11 @@ export default function SeqBackground() {
     let ready = false;
 
     const draw = (i: number) => {
-      while (i > 0 && !(frames[i]?.complete && frames[i].naturalWidth)) i--;
+      const ok = (k: number) => !!(frames[k]?.complete && frames[k].naturalWidth);
+      let lo = i, hi = i;
+      while (lo > 0 && !ok(lo)) lo--;
+      while (hi < COUNT - 1 && !ok(hi)) hi++;
+      i = ok(lo) && (!ok(hi) || i - lo <= hi - i) ? lo : hi;
       const im = frames[i];
       if (!im || !im.naturalWidth || i === last) return;
       last = i;
@@ -31,12 +35,24 @@ export default function SeqBackground() {
     };
     const update = () => { if (ready) draw(reduce ? 0 : Math.round(progress() * (COUNT - 1))); };
 
-    for (let i = 0; i < COUNT; i++) { const im = new Image(); im.src = src(i); frames.push(im); }
-    frames[0].onload = () => { ready = true; update(); };
+    for (let i = 0; i < COUNT; i++) { const im = new Image(); im.decoding = 'async'; frames.push(im); }
+    // load first frame now, then every 8th frame (coarse turn first), then the rest, a few at a time
+    const order = [0, ...Array.from({ length: COUNT }, (_, i) => i).filter((i) => i % 8 === 0 && i), ...Array.from({ length: COUNT }, (_, i) => i).filter((i) => i % 8 !== 0)];
+    let next = 0, dead = false;
+    const pump = () => {
+      if (dead || next >= order.length) return;
+      const i = order[next++];
+      const im = frames[i];
+      im.onload = im.onerror = () => { if (i === 0) { ready = true; } update(); pump(); };
+      im.src = src(i);
+    };
+    pump();
+    const start = () => { for (let k = 0; k < 3; k++) pump(); };
+    if (document.readyState === 'complete') start(); else addEventListener('load', start, { once: true });
 
     addEventListener('scroll', update, { passive: true });
     addEventListener('resize', update);
-    return () => { removeEventListener('scroll', update); removeEventListener('resize', update); };
+    return () => { dead = true; removeEventListener('scroll', update); removeEventListener('resize', update); };
   }, []);
 
   return (
@@ -47,7 +63,7 @@ export default function SeqBackground() {
         height={540}
         role="img"
         aria-label="Portrait of Afolabi Peter, animated as you scroll"
-        className="fixed inset-0 -z-20 h-full w-full object-cover object-[62%_center]"
+        className="fixed inset-y-0 right-0 -z-20 h-full w-full object-cover object-[70%_center] md:w-[68%] md:object-center md:[mask-image:linear-gradient(90deg,transparent,#000_28%)]"
       />
       <div
         aria-hidden="true"

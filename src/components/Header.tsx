@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 
 const links = [
   { label: 'Work', href: '/#work', id: 'work' },
+  { label: 'Experience', href: '/#experience', id: 'experience' },
   { label: 'About', href: '/#about', id: 'about' },
-  { label: 'Approach', href: '/#approach', id: 'approach' },
   { label: 'Projects', href: '/work/', id: '' },
 ];
 
@@ -25,7 +25,7 @@ export default function Header({ home = false }: { home?: boolean }) {
 
   useEffect(() => {
     if (!home) return;
-    const ids = ['work', 'about', 'approach', 'contact'];
+    const ids = ['work', 'experience', 'about', 'contact'];
     const io = new IntersectionObserver(
       (es) => es.forEach((e) => e.isIntersecting && setActive(e.target.id)),
       { rootMargin: '-45% 0px -50% 0px' },

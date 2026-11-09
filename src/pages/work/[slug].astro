@@ -1,10 +1,12 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { projects } from '../../data/projects';
+import { cases } from '../../data/cases';
 export function getStaticPaths() {
   return projects.map((p, i) => ({ params: { slug: p.slug }, props: { p, next: projects[(i + 1) % projects.length] } }));
 }
 const { p, next } = Astro.props;
+const c = cases[p.slug];
 ---
 <Base title={`${p.title} — Afolabi Peter`} description={p.summary}>
 <article class="wrap pb-16 pt-32 sm:pt-40">
@@ -23,10 +25,47 @@ const { p, next } = Astro.props;
     <div><dt class="eyebrow mb-1.5">Code</dt><dd><a class="text-accent hover:underline" href={p.repo} target="_blank" rel="noopener">GitHub ↗</a>{p.case && <> · <a class="text-accent hover:underline" href={p.case} target="_blank" rel="noopener">Case study ↗</a></>}</dd></div>
   </dl>
 
-  <div class="mt-12 grid gap-10 md:grid-cols-2">
-    <section><h2 class="eyebrow mb-3 !text-teal">What it is</h2><p class="text-lg text-cream/85">{p.summary}</p></section>
-    <section><h2 class="eyebrow mb-3 !text-teal">The hard part</h2><p class="text-lg text-cream/85">{p.hard}</p></section>
-  </div>
+  {c ? (
+    <div class="mt-14 space-y-16">
+      <section class="grid gap-6 md:grid-cols-[minmax(0,.6fr)_minmax(0,1.4fr)] md:gap-12">
+        <h2 class="eyebrow !text-teal">The problem</h2>
+        <div><p class="text-lg text-cream/85 sm:text-xl">{c.problem}</p><p class="mt-5 font-mono text-xs uppercase tracking-widest text-cream/50">My role: {c.role}</p></div>
+      </section>
+
+      {c.shots && (
+        <section aria-label="Screens" class="grid gap-4 sm:grid-cols-2">
+          {c.shots.map((s) => (
+            <figure class={`card overflow-hidden p-2 ${s.mobile ? 'sm:col-span-1' : ''}`}>
+              <img src={s.src} alt={s.alt} loading="lazy" class={`w-full rounded-2xl ${s.mobile ? 'mx-auto max-h-[34rem] w-auto object-contain' : ''}`} />
+            </figure>
+          ))}
+        </section>
+      )}
+
+      <section>
+        <h2 class="eyebrow mb-8 !text-teal">Decisions and why</h2>
+        <ol class="divide-y divide-cream/10 border-y border-cream/10">
+          {c.decisions.map((d, i) => (
+            <li class="grid gap-3 py-7 md:grid-cols-[4rem_minmax(0,.9fr)_minmax(0,1.4fr)] md:gap-8">
+              <span class="font-mono text-sm text-accent">0{i + 1}</span>
+              <h3 class="text-xl font-light tracking-tight">{d.t}</h3>
+              <p class="text-cream/70">{d.d}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section class="grid gap-10 md:grid-cols-2">
+        <div><h2 class="eyebrow mb-4 !text-teal">Results</h2><ul class="space-y-3 text-cream/80">{c.results.map((r) => <li class="flex gap-3"><span class="mt-2 size-1.5 shrink-0 rounded-full bg-accent"></span>{r}</li>)}</ul></div>
+        <div><h2 class="eyebrow mb-4 !text-teal">What I’d build next</h2><ul class="space-y-3 text-cream/80">{c.next.map((r) => <li class="flex gap-3"><span class="mt-2 size-1.5 shrink-0 rounded-full bg-teal"></span>{r}</li>)}</ul></div>
+      </section>
+    </div>
+  ) : (
+    <div class="mt-12 grid gap-10 md:grid-cols-2">
+      <section><h2 class="eyebrow mb-3 !text-teal">What it is</h2><p class="text-lg text-cream/85">{p.summary}</p></section>
+      <section><h2 class="eyebrow mb-3 !text-teal">The hard part</h2><p class="text-lg text-cream/85">{p.hard}</p></section>
+    </div>
+  )}
 
   <a href={`/work/${next.slug}/`} class="group card mt-16 flex items-center justify-between gap-6 p-6 transition hover:border-accent/60 sm:p-8">
     <span><span class="eyebrow block">Next project</span><b class="mt-2 block text-2xl font-light tracking-tight group-hover:text-accent sm:text-4xl">{next.title}</b></span>
