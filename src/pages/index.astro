@@ -57,12 +57,17 @@ import BuildClock from '../components/BuildClock';
           <a href="/Afolabi-Peter-CV.pdf" download class="btn btn-ghost">Download CV</a>
         </div>
       </div>
-      <dl class="card w-full max-w-sm p-5 font-mono text-[11px] uppercase tracking-[.1em] md:w-80">
-        <p class="mb-3 text-cream/75">[ Builder profile ]</p>
-        {[['Status', 'Open to work', true], ['Discipline', 'Full-stack', false], ['Focus', 'Fintech · Marketplaces', false], ['Base', 'Nigeria · Remote', false], ['Studying', 'FUT Minna · 2028', false]].map(([k, v, on]) => (
-          <div class="flex justify-between gap-4 border-t border-white/[.14] py-2"><dt class="text-cream/75">{k}</dt><dd class="text-right text-cream">{on && <span class="mr-1.5 inline-block size-1.5 rounded-full bg-accent"></span>}{v}</dd></div>
-        ))}
-      </dl>
+      <aside aria-label="Builder profile" class="w-full max-w-xs rounded-2xl border border-white/[.14] bg-ink/65 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,.08),0_18px_40px_-18px_rgba(0,0,0,.9)] backdrop-blur-xl md:w-72">
+        <div class="mb-3 flex items-center justify-between">
+          <p class="text-sm font-semibold text-white">Builder profile</p>
+          <span class="inline-flex items-center gap-1.5 rounded-full border border-teal/40 bg-teal/10 px-2.5 py-1 text-[11px] font-medium text-teal"><span class="relative flex size-1.5"><span class="absolute inline-flex size-full animate-ping rounded-full bg-teal opacity-70"></span><span class="relative inline-flex size-1.5 rounded-full bg-teal"></span></span>Open to work</span>
+        </div>
+        <dl class="divide-y divide-white/10 text-[13px]">
+          {[['Discipline', 'Full-stack'], ['Focus', 'Fintech · Marketplaces'], ['Base', 'Nigeria · Remote'], ['Studying', 'FUT Minna · 2028']].map(([k, v]) => (
+            <div class="flex items-baseline justify-between gap-4 py-2"><dt class="text-cream/75">{k}</dt><dd class="text-right font-medium text-white">{v}</dd></div>
+          ))}
+        </dl>
+      </aside>
     </div>
   </div>
 </section>
