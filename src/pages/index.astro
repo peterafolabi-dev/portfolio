@@ -37,6 +37,7 @@ const tools = [
   ['Frontend', ['React', 'Next.js', 'Tailwind CSS']],
   ['Backend & data', ['Django', 'Supabase', 'PostgreSQL']],
 ] as const;
+import LiveTime from '../components/LiveTime';
 ---
 <Base home>
 <div id="top"></div>
@@ -60,6 +61,7 @@ const tools = [
         {[['Status', 'Open to work', true], ['Discipline', 'Full-stack', false], ['Focus', 'Fintech · Marketplaces', false], ['Base', 'Nigeria · Remote', false], ['Studying', 'FUT Minna · 2028', false]].map(([k, v, on]) => (
           <div class="flex justify-between gap-4 border-t border-white/[.14] py-2"><dt class="text-cream/75">{k}</dt><dd class="text-right text-cream">{on && <span class="mr-1.5 inline-block size-1.5 rounded-full bg-accent"></span>}{v}</dd></div>
         ))}
+        <div class="flex justify-between gap-4 border-t border-white/[.14] py-2"><dt class="text-cream/75">Local time</dt><dd class="text-right text-cream"><span class="mr-1.5 inline-block size-1.5 animate-pulse rounded-full bg-teal"></span><LiveTime client:load /></dd></div>
       </dl>
     </div>
   </div>
