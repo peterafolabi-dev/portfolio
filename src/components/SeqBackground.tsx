@@ -5,7 +5,9 @@ const conn = (typeof navigator !== 'undefined' ? (navigator as any).connection :
 /** Data Saver on, or a 2G/3G connection: load a light version (small frames, every 4th frame, about a quarter of the weight). */
 const lean = !!conn && (conn.saveData === true || ['slow-2g', '2g', '3g'].includes(conn.effectiveType ?? ''));
 const small = lean || (typeof matchMedia !== 'undefined' && matchMedia('(max-width: 767px)').matches);
-const src = (i: number) => `/img/${small ? 'seq-s' : 'seq'}/${String(i + 1).padStart(3, '0')}.jpg`;
+/** Large desktop screens get the 1920x1080 frames (upscaled from the 720p source); smaller screens the 1280x720 ones. */
+const hd = !small && typeof matchMedia !== 'undefined' && matchMedia('(min-width: 1100px)').matches;
+const src = (i: number) => `/img/${small ? 'seq-s' : hd ? 'seq-hd' : 'seq'}/${String(i + 1).padStart(3, '0')}.jpg`;
 
 /** Full-screen scroll-scrubbed image sequence (230 frames) behind the whole page. */
 export default function SeqBackground() {
@@ -65,7 +67,11 @@ export default function SeqBackground() {
       const max = document.documentElement.scrollHeight - innerHeight;
       return max > 0 ? Math.min(1, Math.max(0, scrollY / max)) : 0;
     };
-    const update = () => { if (ready) draw(reduce ? 0 : Math.round(progress() * (COUNT - 1))); };
+    const update = () => {
+      // After the hero the portrait sinks to a faint backdrop so it never competes with section content (e.g. the About portrait).
+      cv.style.opacity = String(Math.max(0.22, 1 - (scrollY / Math.max(1, innerHeight * 0.9)) * 0.78));
+      if (ready) draw(reduce ? 0 : Math.round(progress() * (COUNT - 1)));
+    };
 
     for (let i = 0; i < COUNT; i++) { const im = new Image(); im.decoding = 'async'; frames.push(im); }
     // load first frame now, then every 8th frame (coarse turn first), then the rest, a few at a time (lean mode stops after every 4th)
