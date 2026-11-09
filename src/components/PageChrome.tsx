@@ -40,13 +40,13 @@ export default function PageChrome({ rail = false }: { rail?: boolean }) {
         <div className="h-full origin-left bg-gradient-to-r from-accent via-amber to-teal shadow-[0_0_12px_rgba(255,74,28,.6)]" style={{ transform: `scaleX(${p})` }} />
       </div>
       {rail && (
-        <nav aria-label="Page sections" className="fixed left-5 top-1/2 z-30 hidden -translate-y-1/2 xl:block">
-          <ol className="space-y-3">
-            {SECTIONS.map(([id, label]) => (
+        <nav aria-label="Page sections" className="fixed left-6 top-1/2 z-30 hidden -translate-y-1/2 min-[1500px]:block">
+          <ol className="relative space-y-4 border-l border-white/15 pl-5">
+            <span aria-hidden="true" className="absolute -left-px top-0 w-px bg-accent transition-all duration-500" style={{ height: `${((SECTIONS.findIndex(([id]) => id === cur) + 1) / SECTIONS.length) * 100}%` }} />
+            {SECTIONS.map(([id, label], i) => (
               <li key={id}>
-                <a href={`#${id}`} className="group flex items-center gap-3" aria-current={cur === id ? 'true' : undefined}>
-                  <span className={`h-px transition-all duration-300 ${cur === id ? 'w-8 bg-accent' : 'w-4 bg-white/40 group-hover:w-6 group-hover:bg-white'}`} />
-                  <span className={`font-mono text-[10px] uppercase tracking-widest transition-opacity duration-300 ${cur === id ? 'text-white opacity-100' : 'text-cream/75 opacity-0 group-hover:opacity-100'}`}>{label}</span>
+                <a href={`#${id}`} className={`flex items-baseline gap-2 font-mono text-[11px] uppercase tracking-widest transition-colors ${cur === id ? 'text-white' : 'text-cream/60 hover:text-white'}`} aria-current={cur === id ? 'true' : undefined}>
+                  <span className={cur === id ? 'text-accent' : ''}>{String(i + 1).padStart(2, '0')}</span>{label}
                 </a>
               </li>
             ))}

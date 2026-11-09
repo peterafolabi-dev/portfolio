@@ -62,8 +62,6 @@ import BuildClock from '../components/BuildClock';
         {[['Status', 'Open to work', true], ['Discipline', 'Full-stack', false], ['Focus', 'Fintech · Marketplaces', false], ['Base', 'Nigeria · Remote', false], ['Studying', 'FUT Minna · 2028', false]].map(([k, v, on]) => (
           <div class="flex justify-between gap-4 border-t border-white/[.14] py-2"><dt class="text-cream/75">{k}</dt><dd class="text-right text-cream">{on && <span class="mr-1.5 inline-block size-1.5 rounded-full bg-accent"></span>}{v}</dd></div>
         ))}
-        <div class="flex justify-between gap-4 border-t border-white/[.14] py-2"><dt class="text-cream/75">Local time</dt><dd class="text-right text-cream"><span class="mr-1.5 inline-block size-1.5 animate-pulse rounded-full bg-teal"></span><LiveTime client:load /></dd></div>
-        <div class="flex justify-between gap-4 border-t border-white/[.14] py-2"><dt class="text-cream/75">Since Dec 2025</dt><dd class="text-right text-cream"><BuildClock client:load /></dd></div>
       </dl>
     </div>
   </div>
@@ -191,7 +189,7 @@ import BuildClock from '../components/BuildClock';
   <div class="wrap grid items-center gap-10 md:grid-cols-[minmax(0,.8fr)_minmax(0,1.2fr)] md:gap-16">
     <div data-r class="relative z-10 mx-auto w-full max-w-[20rem] sm:max-w-sm md:mx-0">
       <div class="aspect-[3/4] w-full overflow-hidden rounded-3xl border border-white/[.14] bg-slate shadow-[10px_10px_0_var(--color-accent)]">
-        <img src="/img/portrait.jpg" alt="Portrait of Afolabi Peter" loading="lazy" class="size-full object-cover" />
+        <img src="/img/portrait.jpg" alt="Portrait of Afolabi Peter" loading="lazy" class="size-full object-cover contrast-[1.08] saturate-[1.12] brightness-[1.04]" />
       </div>
     </div>
     <div data-r>

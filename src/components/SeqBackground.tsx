@@ -43,27 +43,26 @@ export default function SeqBackground() {
       const im = frames[i];
       if (!im || !im.naturalWidth || i === last) return;
       last = i;
-      // Desktop: show the whole frame (fit to width, no zoom-crop) so the portrait is the same size as in the
-      // source video; its top and bottom edges are faded into the page below. Mobile keeps the cover crop.
+      // Desktop: the portrait is scaled to ~72% of the screen height and sits high on the screen, so the face is clear
+      // of the profile card and the shirt stays visible. Only a short edge at the top, bottom and left blends into the page.
+      // Mobile keeps the cover crop. A light colour grade makes the picture richer.
       const wide = innerWidth >= 768 && im.naturalWidth > im.naturalHeight;
-      const scale = wide ? (cw / im.naturalWidth) * 0.85 : Math.max(cw / im.naturalWidth, ch / im.naturalHeight);
+      const scale = wide ? Math.max((cw / im.naturalWidth) * 0.85, (ch * 0.7) / im.naturalHeight) : Math.max(cw / im.naturalWidth, ch / im.naturalHeight);
       cx.globalCompositeOperation = 'source-over';
       cx.clearRect(0, 0, cw, ch);
       const w = im.naturalWidth * scale, h = im.naturalHeight * scale;
-      const px = wide ? 1 : 0.5; // desktop: frame sits against the right edge
+      const x0 = wide ? (w >= cw ? (cw - w) * 0.5 : cw - w) : (cw - w) * 0.5;
+      const y0 = wide ? Math.min(ch * 0.08, ch - h) : (ch - h) * 0.5; // sits high enough that the face clears the profile card
       cx.imageSmoothingEnabled = true;
       cx.imageSmoothingQuality = 'high';
-      cx.drawImage(im, (cw - w) * px, (ch - h) * 0.5, w, h);
+      cx.filter = 'contrast(1.1) saturate(1.15) brightness(1.06)';
+      cx.drawImage(im, x0, y0, w, h);
+      cx.filter = 'none';
       if (wide) {
-        const y0 = (ch - h) * 0.5;
-        const g = cx.createLinearGradient(0, y0, 0, y0 + h);
-        g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(0.2, 'rgba(0,0,0,1)'); g.addColorStop(0.8, 'rgba(0,0,0,1)'); g.addColorStop(1, 'rgba(0,0,0,0)');
         cx.globalCompositeOperation = 'destination-in';
+        const g = cx.createLinearGradient(0, y0, 0, y0 + h); // soft top edge, a short fade at the very bottom, body fully visible between
+        g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(0.14, 'rgba(0,0,0,1)'); g.addColorStop(0.9, 'rgba(0,0,0,1)'); g.addColorStop(1, 'rgba(0,0,0,0)');
         cx.fillStyle = g; cx.fillRect(0, 0, cw, ch);
-        const x0 = (cw - w) * px;
-        const gx = cx.createLinearGradient(x0, 0, x0 + w, 0);
-        gx.addColorStop(0, 'rgba(0,0,0,0)'); gx.addColorStop(0.3, 'rgba(0,0,0,1)'); gx.addColorStop(1, 'rgba(0,0,0,1)');
-        cx.fillStyle = gx; cx.fillRect(0, 0, cw, ch);
         cx.globalCompositeOperation = 'source-over';
       }
     };
@@ -115,6 +114,7 @@ export default function SeqBackground() {
 
   return (
     <>
+      <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-30 hidden bg-[radial-gradient(40%_55%_at_72%_58%,rgba(255,110,50,.22),transparent_70%),radial-gradient(30%_40%_at_90%_20%,rgba(61,224,197,.10),transparent_70%)] md:block" />
       <canvas
         ref={ref}
         role="img"
@@ -123,7 +123,7 @@ export default function SeqBackground() {
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none fixed inset-0 -z-10 bg-[linear-gradient(90deg,rgba(9,9,11,.8),rgba(9,9,11,.3)_50%,rgba(9,9,11,0)),linear-gradient(transparent_55%,rgba(9,9,11,.7))] max-md:bg-ink/35"
+        className="pointer-events-none fixed inset-0 -z-10 bg-[linear-gradient(90deg,rgba(9,9,11,.8),rgba(9,9,11,.3)_50%,rgba(9,9,11,0)),linear-gradient(transparent_75%,rgba(9,9,11,.4))] max-md:bg-ink/35"
       />
     </>
   );
