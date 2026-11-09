@@ -117,7 +117,7 @@ export default function AskPeter() {
           </form>
         </div>
       )}
-      <button type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-label={open ? 'Close chat' : 'Ask about Peter'} className="ml-auto grid h-12 place-items-center rounded-full bg-accent px-5 text-sm font-medium text-white shadow-[inset_0_1px_0_rgba(255,255,255,.28),0_0_0_1px_rgba(255,74,28,.55),0_8px_28px_-6px_rgba(255,74,28,.6)] transition active:scale-95">
+      <button type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-label={open ? 'Close chat' : 'Ask about Peter'} className="ml-auto grid h-10 place-items-center rounded-full bg-accent px-4 text-xs md:h-12 md:px-5 md:text-sm font-medium text-white shadow-[inset_0_1px_0_rgba(255,255,255,.28),0_0_0_1px_rgba(255,74,28,.55),0_8px_28px_-6px_rgba(255,74,28,.6)] transition active:scale-95">
         {open ? 'Close' : 'Ask about Peter'}
       </button>
     </div>
