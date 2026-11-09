@@ -2,11 +2,11 @@ import { useEffect, useRef } from 'react';
 
 const COUNT = 230;
 const conn = (typeof navigator !== 'undefined' ? (navigator as any).connection : undefined) as { saveData?: boolean; effectiveType?: string } | undefined;
-/** Data Saver on, or a 2G/3G connection: load a light version (small frames, every 4th frame, about a quarter of the weight). */
-const lean = !!conn && (conn.saveData === true || ['slow-2g', '2g', '3g'].includes(conn.effectiveType ?? ''));
-const small = lean || (typeof matchMedia !== 'undefined' && matchMedia('(max-width: 767px)').matches);
+/** Slow links load fewer frames (never different-shaped ones): Data Saver or 2G -> every 4th, 3G -> every 2nd. */
+const step = !conn ? 1 : conn.saveData === true || ['slow-2g', '2g'].includes(conn.effectiveType ?? '') ? 4 : conn.effectiveType === '3g' ? 2 : 1;
+const small = typeof matchMedia !== 'undefined' && matchMedia('(max-width: 767px)').matches;
 /** Large desktop screens get the 1920x1080 frames (upscaled from the 720p source); smaller screens the 1280x720 ones. */
-const hd = !small && typeof matchMedia !== 'undefined' && matchMedia('(min-width: 1100px)').matches;
+const hd = !small && step === 1 && typeof matchMedia !== 'undefined' && matchMedia('(min-width: 1100px)').matches;
 const src = (i: number) => `/img/${small ? 'seq-s' : hd ? 'seq-hd' : 'seq'}/${String(i + 1).padStart(3, '0')}.jpg`;
 
 /** Full-screen scroll-scrubbed image sequence (230 frames) behind the whole page. */
@@ -45,7 +45,7 @@ export default function SeqBackground() {
       last = i;
       // Desktop: show the whole frame (fit to width, no zoom-crop) so the portrait is the same size as in the
       // source video; its top and bottom edges are faded into the page below. Mobile keeps the cover crop.
-      const wide = innerWidth >= 768;
+      const wide = innerWidth >= 768 && im.naturalWidth > im.naturalHeight;
       const scale = wide ? cw / im.naturalWidth : Math.max(cw / im.naturalWidth, ch / im.naturalHeight);
       cx.globalCompositeOperation = 'source-over';
       cx.clearRect(0, 0, cw, ch);
@@ -74,9 +74,9 @@ export default function SeqBackground() {
     };
 
     for (let i = 0; i < COUNT; i++) { const im = new Image(); im.decoding = 'async'; frames.push(im); }
-    // load first frame now, then every 8th frame (coarse turn first), then the rest, a few at a time (lean mode stops after every 4th)
+    // load first frame now, then every 8th frame (coarse turn first), then the rest, a few at a time (slow links only load every 2nd or 4th)
     const all = Array.from({ length: COUNT }, (_, i) => i);
-    const wanted = lean ? all.filter((i) => i % 4 === 0) : all;
+    const wanted = step > 1 ? all.filter((i) => i % step === 0) : all;
     const state = new Map<number, 'loading' | 'done'>();
     let dead = false;
     const target = () => (reduce ? 0 : Math.round(progress() * (COUNT - 1)));
