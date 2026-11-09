@@ -46,20 +46,24 @@ export default function SeqBackground() {
       // Desktop: show the whole frame (fit to width, no zoom-crop) so the portrait is the same size as in the
       // source video; its top and bottom edges are faded into the page below. Mobile keeps the cover crop.
       const wide = innerWidth >= 768 && im.naturalWidth > im.naturalHeight;
-      const scale = wide ? cw / im.naturalWidth : Math.max(cw / im.naturalWidth, ch / im.naturalHeight);
+      const scale = wide ? (cw / im.naturalWidth) * 0.85 : Math.max(cw / im.naturalWidth, ch / im.naturalHeight);
       cx.globalCompositeOperation = 'source-over';
       cx.clearRect(0, 0, cw, ch);
       const w = im.naturalWidth * scale, h = im.naturalHeight * scale;
-      const px = 0.5; // frames are pre-cropped around the subject
+      const px = wide ? 1 : 0.5; // desktop: frame sits against the right edge
       cx.imageSmoothingEnabled = true;
       cx.imageSmoothingQuality = 'high';
       cx.drawImage(im, (cw - w) * px, (ch - h) * 0.5, w, h);
-      if (wide && h < ch) {
+      if (wide) {
         const y0 = (ch - h) * 0.5;
         const g = cx.createLinearGradient(0, y0, 0, y0 + h);
         g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(0.2, 'rgba(0,0,0,1)'); g.addColorStop(0.8, 'rgba(0,0,0,1)'); g.addColorStop(1, 'rgba(0,0,0,0)');
         cx.globalCompositeOperation = 'destination-in';
         cx.fillStyle = g; cx.fillRect(0, 0, cw, ch);
+        const x0 = (cw - w) * px;
+        const gx = cx.createLinearGradient(x0, 0, x0 + w, 0);
+        gx.addColorStop(0, 'rgba(0,0,0,0)'); gx.addColorStop(0.3, 'rgba(0,0,0,1)'); gx.addColorStop(1, 'rgba(0,0,0,1)');
+        cx.fillStyle = gx; cx.fillRect(0, 0, cw, ch);
         cx.globalCompositeOperation = 'source-over';
       }
     };
