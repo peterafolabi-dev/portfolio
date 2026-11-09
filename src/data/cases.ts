@@ -87,13 +87,13 @@ export const cases: Record<string, Case> = {
       { t: 'Fake reviews without punishing real customers', d: 'Each review gets a fraud score from signals like near-duplicate text, a burst on one product, brand-new accounts and generic text with an extreme rating. Only high-confidence fraud is hidden; borderline reviews stay public and are flagged for staff.' },
     ],
     results: [
-      '83 Django tests listed in the repo’s own README (my CV says 94, which I am correcting)',
+      '98 Django tests pass in CI, including new tests for payment verification (wrong amount, replayed reference, failed payment)',
       'Moved from Render to Vercel with a Neon Postgres database',
       'Payments run in Paystack test mode only; no real money moves',
     ],
     next: ['Paystack webhooks, so a payment still lands if the customer closes the tab', 'Move the payment checks into a service function with its own unit tests', 'Embeddings for product search instead of keyword matching'],
     wrong: [
-      'The amount-mismatch branch of my payment check has no dedicated test yet. I found that while writing this page, and I am adding one.',
+      'The amount-mismatch branch of my payment check had no test. I found that while writing this page and added tests for it, then checked they fail when the check is removed.',
       'Amounts are float naira rounded to two places. That is fine for a demo and wrong for a ledger; Oja Ledger uses whole kobo for exactly this reason.',
       'The payment logic lives inside a view. That made it harder to test than it should have been.',
     ],

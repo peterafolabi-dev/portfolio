@@ -30,6 +30,6 @@ export const peeks: Record<string, Peek> = {
     why: 'After Paystack says “success”, the order total is rebuilt from the server-side cart, coupon and insurance. If the amount paid differs, no order is created.',
     code: redcartCode,
     url: `https://github.com/peterafolabi-dev/Retail-Logistics-Core/blob/${RC}/products/views.py#L359-L367`,
-    proof: 'Honest gap: this mismatch branch has no dedicated test yet. Amounts here are float naira rounded to 2 places, unlike Oja Ledger’s whole kobo.',
+    proof: 'Tested: a test in products/tests.py replays a Paystack response with the wrong amount and asserts no order is created and the cart is kept; I confirmed it fails when the check is removed. Honest caveat: amounts are float naira rounded to 2 places, unlike Oja Ledger’s whole kobo.',
   },
 };

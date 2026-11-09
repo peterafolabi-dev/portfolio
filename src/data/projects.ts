@@ -66,7 +66,7 @@ export const projects: Project[] = [
       "RAG"
     ],
     "summary": "An online store with 103 products, Google sign-in, Paystack checkout, review fraud scoring, an AI shopping assistant, and a second storefront in Next.js reading the store's API.",
-    "hard": "The AI assistant isn't allowed to guess. Order status and stock come from the database, and policy answers come from real documents through a small retrieval layer. Payments are re-checked against the cart total on the server before an order exists. 94 tests run in CI.",
+    "hard": "The AI assistant isn't allowed to guess. Order status and stock come from the database, and policy answers come from real documents through a small retrieval layer. Payments are re-checked against the cart total on the server before an order exists. 98 tests run in CI.",
     "liveLabel": "Live site",
     "case": "https://github.com/peterafolabi-dev/Retail-Logistics-Core/blob/main/docs/CASE_STUDY.md"
   },
