@@ -4,14 +4,42 @@
   var fine = matchMedia("(hover: hover) and (pointer: fine)").matches;
   var $ = function (s, r) { return (r || document).querySelector(s) };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)) };
+  /* clock (not motion) */
+  var lg = $("#lagos");
+  function clk() { if (lg) lg.textContent = "Lagos, Nigeria · " + new Date().toLocaleTimeString("en-GB", { timeZone: "Africa/Lagos", hour: "2-digit", minute: "2-digit" }) }
+  clk(); setInterval(clk, 30000);
   if (rm) return;
+
+  /* header: hide on scroll down, return on scroll up */
+  var hd = $("header"), ly = scrollY;
+  addEventListener("scroll", function () { var y = scrollY; if (hd) { hd.classList.toggle("sc", y > 40); hd.classList.toggle("hd", y > ly && y > 260); } ly = y }, { passive: true });
+
+  /* pinned horizontal scroll for the project gallery (desktop) */
+  var hz = $("#work.hz"), gal = $("#gal"), pgi = $("#pgi"), dist = 0;
+  function sizeHz() {
+    if (!hz || !gal) return;
+    if (innerWidth < 900) { hz.classList.remove("on"); gal.style.transform = ""; return }
+    hz.classList.add("on"); gal.style.transform = "";
+    dist = Math.max(0, gal.scrollWidth - innerWidth + 40);
+    hz.style.setProperty("--hh", (dist + innerHeight) + "px");
+    moveHz();
+  }
+  function moveHz() {
+    if (!hz || !hz.classList.contains("on")) return;
+    var p = Math.min(1, Math.max(0, (scrollY - hz.offsetTop) / Math.max(1, dist)));
+    gal.style.transform = "translate3d(" + (-p * dist).toFixed(1) + "px,0,0)";
+    if (pgi) pgi.style.width = (12 + p * 88) + "%";
+    flow();
+  }
+  addEventListener("scroll", moveHz, { passive: true });
+  addEventListener("resize", sizeHz);
 
   /* 1. coverflow: cards in the gallery rotate in 3D by distance from the centre */
   var g = $("#gal");
   var cards = $$(".cd");
   function flow() {
     if (!g) return;
-    var gr = g.getBoundingClientRect(), mid = gr.left + gr.width / 2;
+    var pin = hz && hz.classList.contains("on"), gr = pin ? { left: 0, width: innerWidth } : g.getBoundingClientRect(), mid = gr.left + gr.width / 2;
     cards.forEach(function (c) {
       var r = c.getBoundingClientRect(), d = ((r.left + r.width / 2) - mid) / (gr.width * .75);
       d = Math.max(-1, Math.min(1, d));
@@ -21,6 +49,7 @@
     });
   }
   if (g) { g.addEventListener("scroll", flow, { passive: true }); addEventListener("resize", flow); flow(); }
+  addEventListener("load", function () { sizeHz() }); setTimeout(sizeHz, 600);
 
   if (!fine) return;
 

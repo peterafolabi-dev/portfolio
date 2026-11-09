@@ -9,28 +9,35 @@ import { projects } from '../data/projects';
 <div class="in"><h1><span><i>Afolabi</i></span><span><i>Peter</i></span></h1><p class="rt"><b>Junior Full-Stack Engineer</b>I build software people trust with money and data. Based in Nigeria, open to remote roles and internships.</p></div>
 <div class="cue mo" aria-hidden="true">Scroll to explore<i></i></div></section>
 
+<div class="mqw" aria-hidden="true"><div class="mq"><div class="tr"><span>Full-stack engineering</span><i>✦</i><span>Payments done right</span><i>✦</i><span>Offline-first</span><i>✦</i><span>PostgreSQL</span><i>✦</i><span>React &amp; Next.js</span><i>✦</i><span>Django</span><i>✦</i><span>Full-stack engineering</span><i>✦</i><span>Payments done right</span><i>✦</i><span>Offline-first</span><i>✦</i><span>PostgreSQL</span><i>✦</i><span>React &amp; Next.js</span><i>✦</i><span>Django</span><i>✦</i></div></div></div>
 <section class="st" id="stm" aria-label="Summary">Payments verified on the server. Bookings the database refuses to double. <span class="ac">Software</span> you can trust.</section>
 
-<section class="sec" id="work"><p class="mo"><b>01</b> — Index</p><h2 class="rv">Selected work</h2>
+<section class="sec hz" id="work"><div class="hz-pin"><div class="hz-top"><div><p class="mo"><b>01</b> — Index</p><h2 class="rv">Selected work</h2></div><p class="hz-hint mo">Scroll to move sideways →</p></div>
 <div class="gal" id="gal" tabindex="0" aria-label="Project gallery, drag or use arrow keys">
 {projects.map((p, i) => (
 <a class="cd" href={`/work/${p.slug}/`} draggable="false"><div class="im"><img src={p.img} alt="" loading="lazy" draggable="false" />{!p.real && <span class="tg mo">Screenshot to add</span>}</div><div class="mt"><b>{p.title}</b><span class="mo">0{i+1} / {p.kind.split(" · ")[0]}</span></div></a>
 ))}
+<a class="cd en" href="/work/" draggable="false"><div class="im"><b>All projects</b><span class="mo">Live demos + code →</span></div></a>
 </div><div class="pg" aria-hidden="true"><i id="pgi"></i></div>
-<p class="note"><a class="mo" href="/work/">All projects →</a> &nbsp; Six live projects, each with a live link and code on GitHub.</p></section>
+<p class="note"><a class="mo" href="/work/">All projects →</a> &nbsp; Six live projects, each with a live link and code on GitHub.</p></div></section>
+
+<section class="sx" aria-label="By the numbers"><div><b>6</b><span class="mo">Live projects, all with code on GitHub</span></div><div><b>800</b><span class="mo">Random trading histories tested on every push (Oja Ledger)</span></div><div><b>103</b><span class="mo">Products in the RedCart store</span></div><div><b>3.79</b><span class="mo">CGPA, Computer Engineering, FUT Minna</span></div></section>
 
 <section class="sec" id="about"><p class="mo"><b>02</b> — About</p><h2 class="rv">About</h2>
 <div class="ab"><div class="ph rv"><img src="/img/portrait.jpg" alt="Portrait of Afolabi Peter" onerror="this.onerror=null;this.src='/img/about.jpg';this.alt='Abstract placeholder, portrait to be added'" /></div>
 <div class="rv"><p>I’m a Computer Engineering student at the Federal University of Technology, Minna, and a Junior Full-Stack Engineer who learns by shipping. I like the unglamorous layer: database constraints, payment verification, offline behaviour and tests that fail loudly.</p>
 <p class="q">Correctness is a feature you <b>can’t bolt on later.</b></p>
+<p class="chips"><span>Open to remote roles</span><span>Internships</span><span>Based in Nigeria</span></p>
 <p class="mo" style="margin-top:22px">B.Eng. Computer Engineering · FUT Minna · 2024–2028</p></div></div></section>
 
-<section class="sec" id="approach"><p class="mo"><b>03</b> — Approach</p><h2 class="rv">How I work</h2>
+<section class="sec cream" id="approach"><p class="mo"><b>03</b> — Approach</p><h2 class="rv">How I work</h2>
 <div class="ap rv"><div><span class="mo">01</span><h3>Understand</h3><p>Start with the real problem and who relies on the product, including the unhappy paths.</p></div><div><span class="mo">02</span><h3>Constrain</h3><p>Put the rules in the schema and the types so bad states can’t exist.</p></div><div><span class="mo">03</span><h3>Build</h3><p>Ship small, working slices on real infrastructure and keep them fast.</p></div><div><span class="mo">04</span><h3>Prove</h3><p>Automated tests in CI, property-based where correctness matters most.</p></div></div>
+</section>
+<section class="sec tkw" id="toolkit"><p class="mo"><b>04</b> — Toolkit</p><h2 class="rv">What I build with</h2>
 <div class="tk rv"><div><h3>Languages</h3><p>TypeScript, JavaScript, Python</p></div><div><h3>Frontend</h3><p>React, Next.js, Tailwind CSS</p></div><div><h3>Backend &amp; data</h3><p>Django, Supabase, PostgreSQL</p></div></div></section>
 
 <section class="ct" id="contact"><p class="mo">Contact</p><h2 class="rv">Let’s talk!</h2>
 <a class="em" href="mailto:afolabiprosper329@gmail.com">afolabiprosper329@gmail.com</a>
 <div class="row"><a href="/Afolabi-Peter-CV.pdf" download>Download CV ↓</a><a href="https://www.linkedin.com/in/afolabi-peter-953669391" target="_blank" rel="noopener">LinkedIn ↗</a><a href="https://github.com/peterafolabi-dev" target="_blank" rel="noopener">GitHub ↗</a></div>
-<footer><span>© 2026 Afolabi Peter</span><a href="#top">Back to top ↑</a></footer></section>
+</section>
 </Base>
