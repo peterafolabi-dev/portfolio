@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-const COUNT = 230;
+const COUNT = 190;
 const conn = (typeof navigator !== 'undefined' ? (navigator as any).connection : undefined) as { saveData?: boolean; effectiveType?: string } | undefined;
 /** Slow links load fewer frames (never different-shaped ones): Data Saver or 2G -> every 4th, 3G -> every 2nd. */
 const step = !conn ? 1 : conn.saveData === true || ['slow-2g', '2g'].includes(conn.effectiveType ?? '') ? 4 : conn.effectiveType === '3g' ? 2 : 1;
@@ -9,7 +9,7 @@ const small = typeof matchMedia !== 'undefined' && matchMedia('(max-width: 767px
 const hd = !small && step === 1 && typeof matchMedia !== 'undefined' && matchMedia('(min-width: 1100px)').matches;
 const src = (i: number) => `/img/${small ? 'seq-s' : hd ? 'seq-hd' : 'seq'}/${String(i + 1).padStart(3, '0')}.jpg`;
 
-/** Full-screen scroll-scrubbed image sequence (230 frames) behind the whole page. */
+/** Full-screen scroll-scrubbed image sequence (190 frames) behind the whole page. */
 export default function SeqBackground() {
   const ref = useRef<HTMLCanvasElement>(null);
 
@@ -43,25 +43,24 @@ export default function SeqBackground() {
       const im = frames[i];
       if (!im || !im.naturalWidth || i === last) return;
       last = i;
-      // Desktop: the portrait is scaled to ~72% of the screen height and sits high on the screen, so the face is clear
-      // of the profile card and the shirt stays visible. Only a short edge at the top, bottom and left blends into the page.
-      // Mobile keeps the cover crop. A light colour grade makes the picture richer.
+      // Desktop: the figure fills the right side, anchored to the bottom edge so the torso runs off-screen (nothing
+      // fades but the empty wall above the cap). Mobile keeps the cover crop. A light colour grade adds richness.
       const wide = innerWidth >= 768 && im.naturalWidth > im.naturalHeight;
-      const scale = wide ? Math.max((cw / im.naturalWidth) * 0.85, (ch * 0.7) / im.naturalHeight) : Math.max(cw / im.naturalWidth, ch / im.naturalHeight);
+      const scale = wide ? Math.max((ch * 0.93) / im.naturalHeight, cw / im.naturalWidth) : Math.max(cw / im.naturalWidth, ch / im.naturalHeight);
       cx.globalCompositeOperation = 'source-over';
       cx.clearRect(0, 0, cw, ch);
       const w = im.naturalWidth * scale, h = im.naturalHeight * scale;
-      const x0 = wide ? (w >= cw ? (cw - w) * 0.5 : cw - w) : (cw - w) * 0.5;
-      const y0 = wide ? Math.min(ch * 0.08, ch - h) : (ch - h) * 0.5; // sits high enough that the face clears the profile card
+      const x0 = wide ? Math.min(0, Math.max(cw - w, cw * 0.55 - 0.57 * w)) : (cw - w) * 0.5; // keep the subject (about 57% across the frame) near the middle of the canvas
+      const y0 = wide ? ch - h : (ch - h) * 0.5;
       cx.imageSmoothingEnabled = true;
       cx.imageSmoothingQuality = 'high';
-      cx.filter = 'contrast(1.1) saturate(1.15) brightness(1.06)';
+      cx.filter = 'brightness(.9) contrast(1.1) saturate(1.12)';
       cx.drawImage(im, x0, y0, w, h);
       cx.filter = 'none';
       if (wide) {
         cx.globalCompositeOperation = 'destination-in';
-        const g = cx.createLinearGradient(0, y0, 0, y0 + h); // soft top edge, a short fade at the very bottom, body fully visible between
-        g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(0.14, 'rgba(0,0,0,1)'); g.addColorStop(0.9, 'rgba(0,0,0,1)'); g.addColorStop(1, 'rgba(0,0,0,0)');
+        const g = cx.createLinearGradient(0, y0, 0, y0 + h * 0.2); // fade only the empty wall above the cap
+        g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(0,0,0,1)');
         cx.fillStyle = g; cx.fillRect(0, 0, cw, ch);
         cx.globalCompositeOperation = 'source-over';
       }
