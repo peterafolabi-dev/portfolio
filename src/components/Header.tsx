@@ -94,7 +94,7 @@ export default function Header({ home = false }: { home?: boolean }) {
           <ul className="p-2">
             {links.map((l) => (
               <li key={l.label}>
-                <a href={l.href} onClick={() => setOpen(false)} className="block rounded-2xl px-4 py-3.5 text-lg font-light hover:bg-cream/8">
+                <a href={l.href} onClick={() => setOpen(false)} className="block rounded-2xl px-4 py-3.5 text-lg font-medium hover:bg-cream/8">
                   {l.label}
                 </a>
               </li>

@@ -8,14 +8,14 @@
   --color-amber: #ffb347;
   --color-teal: #3de0c5;
   --color-cream: #f4f1ec;
-  --font-sans: "Sora", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, monospace;
 }
 
 @layer base {
   html { scroll-behavior: smooth; overflow-x: clip; scroll-padding-top: 6rem; }
   html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; -webkit-text-size-adjust: 100%; }
-  body { @apply bg-ink text-cream font-sans font-normal antialiased; }
+  body { @apply bg-ink text-cream font-sans font-normal antialiased; font-feature-settings: 'ss01', 'cv11'; letter-spacing: -0.011em; }
   ::selection { background: var(--color-accent); color: #fff; }
   :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
 }
@@ -24,7 +24,7 @@
   .wrap { @apply mx-auto w-full max-w-6xl px-5 sm:px-8; }
   .eyebrow { @apply font-mono text-xs uppercase tracking-[0.18em] text-cream/75; }
   h1, h2, h3 { @apply text-white tracking-tight; }
-  .h2 { @apply text-4xl font-extralight uppercase leading-[0.95] tracking-tight sm:text-6xl lg:text-7xl; }
+  .h2 { @apply text-4xl font-semibold leading-[1.02] tracking-[-0.04em] sm:text-6xl lg:text-7xl; }
   .btn { @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition duration-300 active:scale-95; }
   .btn-primary { @apply bg-accent text-white shadow-[inset_0_1px_0_rgba(255,255,255,.28),0_0_0_1px_rgba(255,74,28,.55),0_8px_28px_-6px_rgba(255,74,28,.6)] hover:bg-amber hover:text-ink hover:shadow-[inset_0_1px_0_rgba(255,255,255,.4),0_0_0_1px_rgba(255,179,71,.6),0_8px_28px_-6px_rgba(255,179,71,.55)]; }
   .btn-ghost { @apply border border-white/40 text-cream hover:border-cream hover:bg-cream hover:text-ink; }

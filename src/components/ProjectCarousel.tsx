@@ -53,7 +53,7 @@ export default function ProjectCarousel({ items }: { items: Item[] }) {
                 </div>
                 <div className="px-2 pb-2 pt-4">
                   <div className="flex items-baseline justify-between gap-3">
-                    <h3 className="text-xl font-light tracking-tight transition group-hover:text-accent">{p.title}</h3>
+                    <h3 className="text-xl font-medium tracking-tight transition group-hover:text-accent">{p.title}</h3>
                     <span className="font-mono text-[11px] text-cream/90">0{i + 1}</span>
                   </div>
                   <p className="mt-1 text-sm text-cream/92">{p.kind}</p>
@@ -70,7 +70,7 @@ export default function ProjectCarousel({ items }: { items: Item[] }) {
         ))}
         <a href="/work/" draggable={false} className="group grid w-[60vw] max-w-[300px] shrink-0 snap-start place-items-center rounded-3xl bg-gradient-to-br from-accent to-amber p-6 text-ink sm:w-[280px]">
           <span className="text-center">
-            <span className="block text-3xl font-extralight uppercase leading-none">All<br />projects</span>
+            <span className="block text-3xl font-semibold leading-none">All<br />projects</span>
             <span className="mt-4 inline-block font-mono text-xs transition group-hover:translate-x-1">Live demos + code →</span>
           </span>
         </a>

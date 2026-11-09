@@ -8,7 +8,7 @@ import { peeks } from '../../data/peeks';
 <section class="wrap pb-20 pt-32 sm:pt-40">
   <p class="mb-5 inline-block rounded-md bg-cream/10 px-3 py-1 text-sm text-cream/92">I love building things</p>
   <p class="eyebrow mb-4">Selected work · {projects.length} projects</p>
-  <h1 class="text-[clamp(3.2rem,12vw,9rem)] font-extralight uppercase leading-[.92] tracking-[-0.04em]">Projects</h1>
+  <h1 class="text-[clamp(3.2rem,12vw,9rem)] font-semibold leading-[.92] tracking-[-0.04em]">Projects</h1>
   <p class="mt-6 max-w-xl text-base text-cream/90 sm:text-lg">Six real, shipped projects across fintech, marketplaces, e-commerce, edtech and logistics. Each one has a live demo, the code on GitHub, and a short case study.</p>
 
   <ul class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -18,7 +18,7 @@ import { peeks } from '../../data/peeks';
           <a href={`/work/${p.slug}/`} class="block rounded-2xl">
             <div class="aspect-[16/10] overflow-hidden rounded-2xl bg-slate ring-1 ring-white/10"><img src={p.img} alt={`${p.title} screenshot`} loading="lazy" class="size-full object-cover transition duration-700 group-hover:scale-105" /></div>
             <div class="px-2 pb-2 pt-4">
-              <div class="flex items-baseline justify-between gap-3"><h2 class="text-xl font-light tracking-tight group-hover:text-accent">{p.title}</h2><span class="font-mono text-[11px] text-cream/75">0{i + 1} · {p.year}</span></div>
+              <div class="flex items-baseline justify-between gap-3"><h2 class="text-xl font-medium tracking-tight group-hover:text-accent">{p.title}</h2><span class="font-mono text-[11px] text-cream/75">0{i + 1} · {p.year}</span></div>
               <p class="mt-1 text-sm text-cream/90">{p.kind}</p>
               <p class="mt-3 line-clamp-3 text-sm text-cream/90">{p.summary}</p>
               {p.note && <p class="mt-3 text-xs text-amber">{p.note}</p>}
