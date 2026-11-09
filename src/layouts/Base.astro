@@ -1,33 +1,43 @@
 ---
 import '../styles/global.css';
+import Header from '../components/Header';
+import Footer from '../components/Footer.astro';
+import SeqBackground from '../components/SeqBackground';
+
 interface Props { title?: string; description?: string; home?: boolean }
-const { title = 'Afolabi Peter — Junior Full-Stack Engineer', description = 'Afolabi Peter, Junior Full-Stack Engineer and Computer Engineering student in Nigeria. Payments, bookings and offline-first software. Open to remote roles and internships.', home = false } = Astro.props;
-const p = home ? '' : '/';
+const {
+  title = 'Afolabi Peter — Junior Full-Stack Engineer',
+  description = 'Afolabi Peter, Junior Full-Stack Engineer and Computer Engineering student in Nigeria. Payments, bookings and offline-first software. Open to remote roles and internships.',
+  home = false,
+} = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ld = { '@context': 'https://schema.org', '@type': 'Person', name: 'Afolabi Peter', jobTitle: 'Junior Full-Stack Engineer', url: 'https://afolabi-peter.vercel.app/', email: 'mailto:afolabiprosper329@gmail.com', alumniOf: 'Federal University of Technology, Minna', sameAs: ['https://github.com/peterafolabi-dev', 'https://www.linkedin.com/in/afolabi-peter-953669391'] };
 ---
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>{title}</title><meta name="description" content={description}><link rel="canonical" href={canonical}>
-<meta property="og:type" content="website"><meta property="og:title" content={title}><meta property="og:description" content={description}><meta property="og:url" content={canonical}>
-<meta name="twitter:card" content="summary"><meta name="theme-color" content="#0e1214">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23293237'/%3E%3Cpath d='M9 24 16 8l7 16' stroke='%23FF3D00' stroke-width='3' fill='none'/%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@200;300;400;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+<meta property="og:type" content="website" /><meta property="og:title" content={title} /><meta property="og:description" content={description} /><meta property="og:url" content={canonical} />
+<meta name="twitter:card" content="summary" /><meta name="theme-color" content="#0e1214" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23293237'/%3E%3Cpath d='M9 24 16 8l7 16' stroke='%23FF4A1C' stroke-width='3' fill='none'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@200;300;400;600&family=JetBrains+Mono:wght@400;500&display=swap" />
 <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+<script is:inline>document.documentElement.classList.add('js')</script>
 </head>
-<body class={home ? 'home' : 'inner'}>
-{home && <div id="ld" aria-hidden="true"><span class="mo" id="ldn">000</span><b>Afolabi Peter</b></div>}
-<div id="wp" aria-hidden="true"></div>
-<a class="sk" href="#main">Skip to content</a>
-<header><div><a href={home ? '#top' : '/'} style="font-weight:600">Afolabi Peter</a> <span class="mo" id="gr" style="margin-left:14px;opacity:.7">Hello!</span></div>
-<div class="mo hs">Socials <a href="https://www.linkedin.com/in/afolabi-peter-953669391" target="_blank" rel="noopener">li</a> / <a href="https://github.com/peterafolabi-dev" target="_blank" rel="noopener">gh</a></div>
-<nav aria-label="Primary"><a href="/work/">Projects</a><a href={`${p}#about`}>About</a><a href={`${p}#approach`}>Approach</a><a class="talk" href={`${p}#contact`}>Let’s talk!</a></nav></header>
+<body>
+<a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-accent focus:px-4 focus:py-2 focus:text-white">Skip to content</a>
+<Header client:load home={home} />
+{home ? <SeqBackground client:load /> : <div aria-hidden="true" class="fixed inset-0 -z-10 bg-[radial-gradient(60%_45%_at_85%_0%,rgba(255,74,28,.16),transparent),radial-gradient(45%_35%_at_0%_60%,rgba(61,224,197,.08),transparent)]"></div>}
 <main id="main"><slot /></main>
-<footer class="ft"><div class="ft-g"><div><span class="mo">Navigate</span><a href="/work/">Projects</a><a href="/#about">About</a><a href="/#approach">Approach</a><a href="/#contact">Contact</a></div><div><span class="mo">Elsewhere</span><a href="https://www.linkedin.com/in/afolabi-peter-953669391" target="_blank" rel="noopener">LinkedIn ↗</a><a href="https://github.com/peterafolabi-dev" target="_blank" rel="noopener">GitHub ↗</a><a href="/Afolabi-Peter-CV.pdf" download>Download CV ↓</a></div><div><span class="mo">Status</span><p><i class="dot"></i>Open to remote roles and internships</p><p class="mo" id="lagos">Lagos, Nigeria</p></div></div><a class="wm" href="#top" aria-label="Back to top">Afolabi Peter</a><div class="ft-b mo"><span>© 2026 Afolabi Peter</span><a href="#top">Back to top ↑</a></div></footer>
-
-<script>import '../scripts/main.js';import '../scripts/fx.js';</script>
+<Footer />
+<script is:inline>
+(function(){var els=[].slice.call(document.querySelectorAll('[data-r]'));if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return}
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -6% 0px'});els.forEach(function(e){io.observe(e)})})();
+</script>
 </body>
 </html>

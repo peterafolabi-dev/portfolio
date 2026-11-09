@@ -1,43 +1,133 @@
 ---
 import Base from '../layouts/Base.astro';
+import ProjectCarousel from '../components/ProjectCarousel';
 import { projects } from '../data/projects';
+
+const items = projects.map((p) => ({ slug: p.slug, title: p.title, kind: p.kind, year: p.year, img: p.img, stack: p.stack }));
+const stats = [
+  ['6', 'Live projects, all with code on GitHub'],
+  ['800', 'Random trading histories tested on every push (Oja Ledger)'],
+  ['103', 'Products in the RedCart store'],
+  ['3.79', 'CGPA, Computer Engineering, FUT Minna'],
+];
+const steps = [
+  ['01', 'Understand', 'Start with the real problem and who relies on the product, including the unhappy paths.'],
+  ['02', 'Constrain', 'Put the rules in the schema and the types so bad states can’t exist.'],
+  ['03', 'Build', 'Ship small, working slices on real infrastructure and keep them fast.'],
+  ['04', 'Prove', 'Automated tests in CI, property-based where correctness matters most.'],
+];
+const tools = [
+  ['Languages', ['TypeScript', 'JavaScript', 'Python']],
+  ['Frontend', ['React', 'Next.js', 'Tailwind CSS']],
+  ['Backend & data', ['Django', 'Supabase', 'PostgreSQL']],
+] as const;
 ---
 <Base home>
 <div id="top"></div>
-<canvas id="seq" width="960" height="540" role="img" aria-label="Portrait of Afolabi Peter, animated as you scroll"></canvas><div id="vov" aria-hidden="true"></div>
-<section class="hero" id="hero" aria-label="Introduction">
-<div class="in"><h1><span><i>Afolabi</i></span><span><i>Peter</i></span></h1><p class="rt"><b>Junior Full-Stack Engineer</b>I build software people trust with money and data. Based in Nigeria, open to remote roles and internships.</p></div>
-<div class="cue mo" aria-hidden="true">Scroll to explore<i></i></div></section>
 
-<div class="mqw" aria-hidden="true"><div class="mq"><div class="tr"><span>Full-stack engineering</span><i>✦</i><span>Payments done right</span><i>✦</i><span>Offline-first</span><i>✦</i><span>PostgreSQL</span><i>✦</i><span>React &amp; Next.js</span><i>✦</i><span>Django</span><i>✦</i><span>Full-stack engineering</span><i>✦</i><span>Payments done right</span><i>✦</i><span>Offline-first</span><i>✦</i><span>PostgreSQL</span><i>✦</i><span>React &amp; Next.js</span><i>✦</i><span>Django</span><i>✦</i></div></div></div>
-<section class="st" id="stm" aria-label="Summary">Payments verified on the server. Bookings the database refuses to double. <span class="ac">Software</span> you can trust.</section>
-
-<section class="sec hz" id="work"><div class="hz-pin"><div class="hz-top"><div><p class="mo"><b>01</b> — Index</p><h2 class="rv">Selected work</h2></div><p class="hz-hint mo">Scroll to move sideways →</p></div>
-<div class="gal" id="gal" tabindex="0" aria-label="Project gallery, drag or use arrow keys">
-{projects.map((p, i) => (
-<a class="cd" href={`/work/${p.slug}/`} draggable="false"><div class="im"><img src={p.img} alt="" loading="lazy" draggable="false" />{!p.real && <span class="tg mo">Screenshot to add</span>}</div><div class="mt"><b>{p.title}</b><span class="mo">0{i+1} / {p.kind.split(" · ")[0]}</span></div></a>
-))}
-<a class="cd en" href="/work/" draggable="false"><div class="im"><b>All projects</b><span class="mo">Live demos + code →</span></div></a>
-</div><div class="pg" aria-hidden="true"><i id="pgi"></i></div>
-<p class="note"><a class="mo" href="/work/">All projects →</a> &nbsp; Six live projects, each with a live link and code on GitHub.</p></div></section>
-
-<section class="sx" aria-label="By the numbers"><div><b>6</b><span class="mo">Live projects, all with code on GitHub</span></div><div><b>800</b><span class="mo">Random trading histories tested on every push (Oja Ledger)</span></div><div><b>103</b><span class="mo">Products in the RedCart store</span></div><div><b>3.79</b><span class="mo">CGPA, Computer Engineering, FUT Minna</span></div></section>
-
-<section class="sec" id="about"><p class="mo"><b>02</b> — About</p><h2 class="rv">About</h2>
-<div class="ab"><div class="ph rv"><img src="/img/portrait.jpg" alt="Portrait of Afolabi Peter" onerror="this.onerror=null;this.src='/img/about.jpg';this.alt='Abstract placeholder, portrait to be added'" /></div>
-<div class="rv"><p>I’m a Computer Engineering student at the Federal University of Technology, Minna, and a Junior Full-Stack Engineer who learns by shipping. I like the unglamorous layer: database constraints, payment verification, offline behaviour and tests that fail loudly.</p>
-<p class="q">Correctness is a feature you <b>can’t bolt on later.</b></p>
-<p class="chips"><span>Open to remote roles</span><span>Internships</span><span>Based in Nigeria</span></p>
-<p class="mo" style="margin-top:22px">B.Eng. Computer Engineering · FUT Minna · 2024–2028</p></div></div></section>
-
-<section class="sec cream" id="approach"><p class="mo"><b>03</b> — Approach</p><h2 class="rv">How I work</h2>
-<div class="ap rv"><div><span class="mo">01</span><h3>Understand</h3><p>Start with the real problem and who relies on the product, including the unhappy paths.</p></div><div><span class="mo">02</span><h3>Constrain</h3><p>Put the rules in the schema and the types so bad states can’t exist.</p></div><div><span class="mo">03</span><h3>Build</h3><p>Ship small, working slices on real infrastructure and keep them fast.</p></div><div><span class="mo">04</span><h3>Prove</h3><p>Automated tests in CI, property-based where correctness matters most.</p></div></div>
+<section class="relative flex min-h-svh items-end pb-16 pt-32 sm:pb-24" aria-label="Introduction">
+  <div class="wrap">
+    <p class="eyebrow mb-5">Junior Full-Stack Engineer · Nigeria</p>
+    <h1 class="text-[clamp(3.4rem,15vw,11.5rem)] font-extralight uppercase leading-[.88] tracking-[-0.05em]">Afolabi<br />Peter</h1>
+    <div class="mt-8 flex flex-col gap-8 sm:mt-10 md:flex-row md:items-end md:justify-between">
+      <p class="max-w-md text-base text-cream/75 sm:text-lg">I build software people trust with money and data. Based in Nigeria, open to remote roles and internships.</p>
+      <div class="flex flex-wrap gap-3">
+        <a href="#work" class="btn btn-primary">View my work ↓</a>
+        <a href="/Afolabi-Peter-CV.pdf" download class="btn btn-ghost">Download CV</a>
+      </div>
+    </div>
+  </div>
 </section>
-<section class="sec tkw" id="toolkit"><p class="mo"><b>04</b> — Toolkit</p><h2 class="rv">What I build with</h2>
-<div class="tk rv"><div><h3>Languages</h3><p>TypeScript, JavaScript, Python</p></div><div><h3>Frontend</h3><p>React, Next.js, Tailwind CSS</p></div><div><h3>Backend &amp; data</h3><p>Django, Supabase, PostgreSQL</p></div></div></section>
 
-<section class="ct" id="contact"><p class="mo">Contact</p><h2 class="rv">Let’s talk!</h2>
-<a class="em" href="mailto:afolabiprosper329@gmail.com">afolabiprosper329@gmail.com</a>
-<div class="row"><a href="/Afolabi-Peter-CV.pdf" download>Download CV ↓</a><a href="https://www.linkedin.com/in/afolabi-peter-953669391" target="_blank" rel="noopener">LinkedIn ↗</a><a href="https://github.com/peterafolabi-dev" target="_blank" rel="noopener">GitHub ↗</a></div>
+<section class="py-24 sm:py-36" aria-label="Summary">
+  <div class="wrap">
+    <p data-r class="max-w-4xl text-3xl font-light leading-[1.15] tracking-tight sm:text-5xl lg:text-6xl">Payments verified on the server. Bookings the database refuses to double. <span class="text-accent">Software</span> you can trust.</p>
+  </div>
+</section>
+
+<section id="work" class="py-16 sm:py-24">
+  <div class="wrap">
+    <div data-r class="mb-10 flex items-end justify-between gap-6">
+      <div><p class="eyebrow mb-4"><span class="text-accent">01</span> — Selected work</p><h2 class="h2">Projects</h2></div>
+      <a href="/work/" class="btn btn-ghost hidden sm:inline-flex">All projects →</a>
+    </div>
+  </div>
+  <ProjectCarousel client:visible items={items} />
+</section>
+
+<section class="py-16 sm:py-24" aria-label="By the numbers">
+  <div class="wrap">
+    <div data-r class="card grid grid-cols-2 overflow-hidden lg:grid-cols-4">
+      {stats.map(([n, l], i) => (
+        <div class={`p-6 sm:p-8 ${i % 2 === 0 ? 'border-r border-cream/10' : ''} ${i < 2 ? 'border-b border-cream/10 lg:border-b-0' : ''} ${i === 1 ? 'lg:border-r' : ''}`}>
+          <p class="bg-gradient-to-r from-accent via-amber to-teal bg-clip-text text-5xl font-extralight tracking-tighter text-transparent sm:text-7xl">{n}</p>
+          <p class="mt-3 text-xs text-cream/60 sm:text-sm">{l}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section id="about" class="py-16 sm:py-24">
+  <div class="wrap grid items-center gap-10 md:grid-cols-[minmax(0,.8fr)_minmax(0,1.2fr)] md:gap-16">
+    <div data-r class="mx-auto w-full max-w-sm md:mx-0">
+      <div class="aspect-[3/4] overflow-hidden rounded-3xl border border-cream/10 bg-slate shadow-[10px_10px_0_var(--color-accent)]">
+        <img src="/img/portrait.jpg" alt="Portrait of Afolabi Peter" loading="lazy" class="size-full object-cover" />
+      </div>
+    </div>
+    <div data-r>
+      <p class="eyebrow mb-4"><span class="text-accent">02</span> — About</p>
+      <h2 class="h2 mb-8">About me</h2>
+      <p class="text-base text-cream/80 sm:text-lg">I’m a Computer Engineering student at the Federal University of Technology, Minna, and a Junior Full-Stack Engineer who learns by shipping. I like the unglamorous layer: database constraints, payment verification, offline behaviour and tests that fail loudly.</p>
+      <p class="mt-6 text-2xl font-extralight leading-tight tracking-tight sm:text-4xl">Correctness is a feature you <span class="text-accent">can’t bolt on later.</span></p>
+      <ul class="mt-8 flex flex-wrap gap-2.5 text-sm">
+        <li class="rounded-full border border-teal/60 px-4 py-2 text-teal">Open to remote roles</li>
+        <li class="rounded-full border border-cream/15 px-4 py-2">Internships</li>
+        <li class="rounded-full border border-cream/15 px-4 py-2">Based in Nigeria</li>
+      </ul>
+      <p class="mt-6 font-mono text-xs uppercase tracking-widest text-cream/50">B.Eng. Computer Engineering · FUT Minna · 2024–2028</p>
+    </div>
+  </div>
+</section>
+
+<section id="approach" class="py-16 sm:py-24">
+  <div class="wrap">
+    <div data-r><p class="eyebrow mb-4"><span class="text-accent">03</span> — Approach</p><h2 class="h2 mb-10">How I work</h2></div>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {steps.map(([n, t, d]) => (
+        <div data-r class="card p-6 transition duration-300 hover:-translate-y-1 hover:border-accent/50">
+          <span class="font-mono text-xs text-accent">{n}</span>
+          <h3 class="mb-2 mt-4 text-2xl font-light tracking-tight">{t}</h3>
+          <p class="text-sm text-cream/65">{d}</p>
+        </div>
+      ))}
+    </div>
+    <div data-r class="mt-14">
+      <p class="eyebrow mb-5">Toolkit</p>
+      <div class="grid gap-4 md:grid-cols-3">
+        {tools.map(([name, list]) => (
+          <div class="card p-6">
+            <h3 class="mb-4 font-mono text-xs uppercase tracking-widest text-teal">{name}</h3>
+            <ul class="flex flex-wrap gap-2">{list.map((t) => <li class="rounded-full border border-cream/15 px-3.5 py-1.5 text-sm">{t}</li>)}</ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="py-16 sm:py-24">
+  <div class="wrap">
+    <div data-r class="rounded-[2rem] bg-accent p-8 text-ink sm:p-14">
+      <p class="font-mono text-xs uppercase tracking-[0.18em] text-ink/70">Contact</p>
+      <h2 class="mt-4 text-[clamp(3rem,11vw,8rem)] font-extralight uppercase leading-[.9] tracking-tighter">Let’s talk!</h2>
+      <a href="mailto:afolabiprosper329@gmail.com" class="mt-8 block break-all text-xl font-light tracking-tight underline-offset-8 hover:underline sm:text-4xl">afolabiprosper329@gmail.com</a>
+      <div class="mt-10 flex flex-wrap gap-3">
+        <a href="/Afolabi-Peter-CV.pdf" download class="btn border border-ink hover:bg-ink hover:text-cream">Download CV ↓</a>
+        <a href="https://www.linkedin.com/in/afolabi-peter-953669391" target="_blank" rel="noopener" class="btn border border-ink hover:bg-ink hover:text-cream">LinkedIn ↗</a>
+        <a href="https://github.com/peterafolabi-dev" target="_blank" rel="noopener" class="btn border border-ink hover:bg-ink hover:text-cream">GitHub ↗</a>
+      </div>
+    </div>
+  </div>
 </section>
 </Base>
