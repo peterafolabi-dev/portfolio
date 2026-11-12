@@ -70,8 +70,8 @@ export default function SeqBackground() {
       return max > 0 ? Math.min(1, Math.max(0, scrollY / max)) : 0;
     };
     const update = () => {
-      // After the hero the portrait sinks to a faint backdrop so it never competes with section content (e.g. the About portrait).
-      cv.style.opacity = String(Math.max(0.22, 1 - (scrollY / Math.max(1, innerHeight * 0.9)) * 0.78));
+      // After the hero the portrait sinks to a barely-there backdrop so it never competes with section content (e.g. the About portrait).
+      cv.style.opacity = String(Math.max(0.06, 1 - (scrollY / Math.max(1, innerHeight * 0.8)) * 0.94));
       if (ready) draw(reduce ? 0 : Math.round(progress() * (COUNT - 1)));
     };
 
